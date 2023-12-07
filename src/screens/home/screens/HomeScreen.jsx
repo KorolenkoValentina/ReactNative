@@ -9,8 +9,8 @@ import {
   StatusBar,
 } from 'react-native';
 
-import MyComponent from './MyComponent';
-import mockItemData from './MockData';
+import Header from '../components/Header';
+import mockItemData from '../components/MockData';
 import {colors} from '../components/Colors'
    
 
@@ -47,7 +47,7 @@ const Item = ({ title, image, oldPrice, newPrice, description, isNew }) => (
 export default function App(){
   const [filteredData, setFilteredData] = useState(mockItemData);
 
-  const filterItems = (text) => {
+  const onSearch= (text) => {
     const filteredItems = mockItemData.filter((item) =>
       item.title.toLowerCase().includes(text.toLowerCase()) 
     );
@@ -55,7 +55,7 @@ export default function App(){
   };
   return (
       <SafeAreaView style={styles.container}>
-      <MyComponent filterItems={filterItems} />
+      <Header onSearch={onSearch} />
       <FlatList
         data={filteredData}
         renderItem={({ item }) => (

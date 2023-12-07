@@ -1,5 +1,5 @@
 export const colors = {
-    primaryBackground: 'blanchedAlmond',
+    primaryBackground: '#FFEBCD',
     shadowColor: 'saddleBrown',
     shadowBorderColor: 'sienna',
     modalBackground: 'rgba(0, 0, 0, 0.5)',
