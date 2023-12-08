@@ -3,7 +3,6 @@ export const colors = {
     shadowColor: 'saddleBrown',
     shadowBorderColor: 'sienna',
     modalBackground: 'rgba(0, 0, 0, 0.5)',
-    modalContentBackground: 'white',
     modalCloseButtonBackground: 'peru',
     modalCloseButtonColor: 'white',
     modalText:'maroon',
@@ -14,4 +13,5 @@ export const colors = {
     textColor: 'gray',
     oldPriceColor: 'red',
     newPriceColor: 'green',
+    
 };

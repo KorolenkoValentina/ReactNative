@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   SafeAreaView,
   View,
@@ -7,14 +7,25 @@ import {
   Text,
   Image,
   StatusBar,
+  RefreshControl,
+  ScrollView
 } from 'react-native';
 
 import Header from '../components/Header';
-import mockItemData from '../components/MockData';
+import {mockItemData, mockOnEndReachedData } from '../components/MockData'; 
 import {colors} from '../components/Colors'
    
 
-
+const mockRefreshItem = [
+ {id: '58694a0f-3da1-471f-bd96-145571e29d94',
+ title: 'Сaesar pizza ',
+ isNew: true,
+ image: require('../images/homeScreen/pizza-сaesar.jpg'),
+ oldPrice: '$15.99',
+ newPrice: '$12.99',
+ description: 'Italian pizza with chicken breast, mozzarella cheese, parmesan cheese, quail eggs, tomatoes, iceberg lettuce, provan herbs, béchamel sauce.',
+}
+];
 
 const Item = ({ title, image, oldPrice, newPrice, description, isNew }) => (
   
@@ -36,8 +47,9 @@ const Item = ({ title, image, oldPrice, newPrice, description, isNew }) => (
       </View>
     </View>
     <View style={styles.iconsContainer}>
-        <Text style={styles.likeIcon}>❤️</Text>
-        <Text style={styles.cartIcon}>Buy 🛒</Text>
+        <Image source={require('../images/header/icon-like.png')} style={styles.likeIcon}/>
+
+        <Image source={require('../images/homeScreen/icon-basket.png')} style={styles.cartIcon}/>
       
     </View>
   </View>
@@ -46,6 +58,31 @@ const Item = ({ title, image, oldPrice, newPrice, description, isNew }) => (
   
 export default function App(){
   const [filteredData, setFilteredData] = useState(mockItemData);
+  const [refreshing, setRefreshing] = useState(false);
+  const [dataWithRefreshItem, setDataWithRefreshItem] = useState(mockItemData);
+  const [isEndReached, setIsEndReached] = useState(false);
+  
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+      setDataWithRefreshItem([mockRefreshItem[0], ...mockItemData]);
+      setIsEndReached(false);
+    }, 3000);
+  }, []);
+
+  useEffect(() => {
+    setFilteredData(dataWithRefreshItem);
+  }, [dataWithRefreshItem]);
+
+
+  const onEndReached = () => {
+    if (!isEndReached) {
+    setDataWithRefreshItem((prevData) => [...prevData, ...mockOnEndReachedData.slice(0, 5)]);
+    setIsEndReached(true);
+  }
+
 
   const onSearch= (text) => {
     const filteredItems = mockItemData.filter((item) =>
@@ -53,32 +90,46 @@ export default function App(){
     );
     setFilteredData(filteredItems);
   };
+
+}
+
   return (
-      <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Header onSearch={onSearch} />
+
       <FlatList
         data={filteredData}
-        renderItem={({ item }) => (
-          <Item 
+         renderItem={({ item }) => (
+          <Item
             title={item.title}
             image={item.image}
-            oldPrice={item.oldPrice}
+           oldPrice={item.oldPrice}
             newPrice={item.newPrice}
             description={item.description}
             isNew={item.isNew}
           />
-          )}
-          keyExtractor={item => item.id}
-        />
-      </SafeAreaView>
-    );
+        )}
+        keyExtractor={(item) => item.id}
+        // onRefresh={onRefresh} 
+        // refreshing={refreshing} 
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+        onEndReached={onEndReached}
+        onEndReachedThreshold={0.1}
+      />
+    </SafeAreaView>
+  );
 };
   
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginTop: StatusBar.currentHeight || 0,
+    
   },
+
+ 
 
   item: {
     width: '90%',
@@ -177,16 +228,18 @@ const styles = StyleSheet.create({
 
   
   likeIcon: {
-    fontSize: 22,
-    top: 5,
+    width:20,
+    height: 20,
+    top: 8,
     right: 5,
   },
   
   cartIcon: {
-    fontSize: 20,
-    top: 30,
+    width:20,
+    height: 20,
+    top: 45,
     right: 5,
   },
 
     
-});
+})

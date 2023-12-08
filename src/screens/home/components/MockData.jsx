@@ -1,6 +1,6 @@
 
 
-const mockItemData = [
+export const mockItemData = [
     {
       id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
       title: 'Pepperoni',
@@ -100,4 +100,55 @@ const mockItemData = [
   
 ];
 
-export default mockItemData;
+
+export const mockOnEndReachedData = [
+ {
+   id: '58694a0f-3da1-471f-bd96-146932e29d94',
+   title: 'Сaesar pizza ',
+   isNew: true,
+   image: require('../images/homeScreen/pizza-сaesar.jpg'),
+   oldPrice: '$15.99',
+   newPrice: '$12.99',
+   description: 'Italian pizza with chicken breast, mozzarella cheese, parmesan cheese, quail eggs, tomatoes, iceberg lettuce, provan herbs, béchamel sauce.',
+  },
+  {
+    id: '58694a0f-3da1-471f-bd96-146971e29d25',
+    title: 'Margarita ',
+    isNew: false,
+    image: require('../images/homeScreen/pizza-margarita.jpg'),
+    oldPrice: '$14.99',
+    newPrice: '$11.99',
+    description: 'Italian pizza with mozzarella cheese, tomatoes and tomato sauce.',
+  },
+  {
+    id: '58694a0f-3da1-471f-bd25-12571e45d36',
+    title: 'BBQ Pizza ',
+    isNew: true,
+    image: require('../images/homeScreen/pizza-bbq.jpg'),
+    oldPrice: '$16.99',
+    newPrice: '$13.99',
+    description: 'Italian pizza with BBQ sauce,mozzarella cheese,prosciutto,bacon,game sausages,fried mushrooms,pickled cucumber,olives,greens.',
+  },
+
+  {
+    id: '58294a0f-5da1-221f-bd26-148961e29p46',
+    title: 'Very cheesy Pizza ',
+    isNew: false,
+    image: require('../images/homeScreen/pizza-5syrov.jpg'),
+    oldPrice: '$19.99',
+    newPrice: '$17.99',
+    description: 'Italian pizza with mozzarella cheese, parmesan cheese, Dor Blue cheese, cheddar cheese slice, feta cheese, cream sauce.',
+  },
+
+  {
+    id: '5825a0f-3da5-471f-bd25-185571e29d63',
+    title: 'Pesto pizza ',
+    isNew: true,
+    image: require('../images/homeScreen/pizza-pesto.jpg'),
+    oldPrice: '$14.99',
+    newPrice: '$12.99',
+    description: 'Italian pizza with parmesan cheese, pine nuts, garlic, green basil, tomatoes, cheese, pesto sauce.',
+  },
+
+
+]
