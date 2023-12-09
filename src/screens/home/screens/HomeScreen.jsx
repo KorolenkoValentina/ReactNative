@@ -79,8 +79,8 @@ export default function App(){
 
   const onEndReached = () => {
     if (!isEndReached) {
-    setDataWithRefreshItem((prevData) => [...prevData, ...mockOnEndReachedData.slice(0, 5)]);
-    setIsEndReached(true);
+    setDataWithRefreshItem((prevData) => [...prevData, ...mockOnEndReachedData]);
+    setIsEndReached(true)};
   }
 
 
@@ -91,7 +91,7 @@ export default function App(){
     setFilteredData(filteredItems);
   };
 
-}
+
 
   return (
     <SafeAreaView style={styles.container}>
