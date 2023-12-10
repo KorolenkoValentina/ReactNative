@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect} from 'react';
+import {useNavigation} from '@react-navigation/native';
 import {
   SafeAreaView,
   View,
@@ -8,11 +9,12 @@ import {
   Image,
   StatusBar,
   RefreshControl,
+  TouchableOpacity
   
 } from 'react-native';
 
 import Header from '../components/Header';
-import {mockItemData, mockOnEndReachedData } from '../components/MockData'; 
+import {mockItemData, mockOnEndReachedData } from '../components/MockData'
 import {colors} from '../components/Colors'
    
 
@@ -27,8 +29,9 @@ const mockRefreshItem = [
 }
 ];
 
-const Item = ({ title, image, oldPrice, newPrice, description, isNew }) => (
-  
+
+const Item = ({ title, image, oldPrice, newPrice, description, isNew, onPress }) => (
+  <TouchableOpacity onPress={() => onPress({ title, image, oldPrice, newPrice, description, isNew })} activeOpacity={1}>
   <View style={styles.item}>
     <View style={styles.itemContent}>
       <View style={styles.imageContainer}>
@@ -53,15 +56,22 @@ const Item = ({ title, image, oldPrice, newPrice, description, isNew }) => (
       
     </View>
   </View>
+  </TouchableOpacity>
 );
 
   
-export default function App(){
+export default function HomeScreen(props){
+ 
   const [filteredData, setFilteredData] = useState(mockItemData);
   const [refreshing, setRefreshing] = useState(false);
   const [dataWithRefreshItem, setDataWithRefreshItem] = useState(mockItemData);
   const [isEndReached, setIsEndReached] = useState(false);
+
+  const navigation = useNavigation();
   
+  const onPress = (item) => {
+    navigation.navigate('PizzaDetails', { item });
+  };
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
@@ -100,10 +110,10 @@ export default function App(){
       <FlatList
         data={filteredData}
          renderItem={({ item }) => (
-          <Item
+          <Item onPress={onPress}
             title={item.title}
             image={item.image}
-           oldPrice={item.oldPrice}
+            oldPrice={item.oldPrice}
             newPrice={item.newPrice}
             description={item.description}
             isNew={item.isNew}
@@ -129,7 +139,6 @@ const styles = StyleSheet.create({
     
   },
 
- 
 
   item: {
     width: '90%',
