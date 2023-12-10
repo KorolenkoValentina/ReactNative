@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 
 import CustomTouchable from '../../../components/CustomTouchable'
-import {colors} from '../components/Colors'
+import {colors} from '../../../components/Colors'
 
 export default function PizzaScreen({ route }) {
   const { item } = route.params;
@@ -22,7 +22,7 @@ export default function PizzaScreen({ route }) {
           <Image source={item.image} style={styles.pizza} />
         </View>
         <View style={styles.textContainer}>
-          <View style={styles.titleBox}>
+          <View style={styles.wrapTitle}>
             <Text style={styles.title}>{item.title}</Text>
             <Image source={require('../images/pizzaScreen/icon-like.png')} style={styles.likeIcon}/>
           </View>
@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
       marginTop:20
     },
 
-    titleBox:{
+    wrapTitle:{
       flexDirection: 'row',
       justifyContent:'space-between',
       marginBottom:30,

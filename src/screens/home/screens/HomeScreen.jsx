@@ -14,8 +14,9 @@ import {
 } from 'react-native';
 
 import Header from '../components/Header';
-import {mockItemData, mockOnEndReachedData } from '../components/MockData'
-import {colors} from '../components/Colors'
+import {colors} from '../../../components/Colors'
+import {mockItemData, mockOnEndReachedData } from '../components/MockData';
+
    
 
 const mockRefreshItem = [
@@ -32,30 +33,30 @@ const mockRefreshItem = [
 
 const Item = ({ title, image, oldPrice, newPrice, description, isNew, onPress }) => (
   <TouchableOpacity onPress={() => onPress({ title, image, oldPrice, newPrice, description, isNew })} activeOpacity={1}>
-  <View style={styles.item}>
-    <View style={styles.itemContent}>
+    <View style={styles.item}>
+   
       <View style={styles.imageContainer}>
         <Image source={image} style={styles.pizza} />
-        {isNew && <View style={styles.newBadge}><Text style={styles.newBadgeText}>New</Text></View>}
+        {isNew && <Image style={styles.iconNew} source={require('../images/homeScreen/icon-new.png')}></Image>}
       </View>
-      <View style={styles.textContainer}>
-       
-        <Text style={styles.title}>{title}</Text>
-        
+      <View style={styles.wrapRight}>
+        <View style={styles.wrapTitle}>
+          <Text style={styles.title}>{title}</Text>
+          <Image source={require('../images/header/icon-like.png')} style={styles.icon}/>
+        </View>
         <View style={styles.priceContainer}>
           <Text style={styles.oldPrice}>{oldPrice}</Text>
           <Text style={styles.newPrice}>{newPrice}</Text>
         </View>
-        <Text numberOfLines={1} ellipsizeMode="tail" style={styles.description}>{description}</Text>
+        <View style={styles.wrapDesc}>
+          <Text numberOfLines={1} ellipsizeMode="tail" style={styles.description}>{description}</Text>
+          <View style={styles.wrapCard}>
+            <Text style={styles.titleCard}>Buy</Text>
+            <Image source={require('../images/homeScreen/icon-basket.png')} style={styles.icon}/>
+          </View>
+        </View>
       </View>
     </View>
-    <View style={styles.iconsContainer}>
-        <Image source={require('../images/header/icon-like.png')} style={styles.likeIcon}/>
-
-        <Image source={require('../images/homeScreen/icon-basket.png')} style={styles.cartIcon}/>
-      
-    </View>
-  </View>
   </TouchableOpacity>
 );
 
@@ -64,32 +65,31 @@ export default function HomeScreen(props){
  
   const [filteredData, setFilteredData] = useState(mockItemData);
   const [refreshing, setRefreshing] = useState(false);
-  const [dataWithRefreshItem, setDataWithRefreshItem] = useState(mockItemData);
   const [isEndReached, setIsEndReached] = useState(false);
 
   const navigation = useNavigation();
   
   const onPress = (item) => {
-    navigation.navigate('PizzaDetails', { item });
+    navigation.navigate('Pizza Details', { item });
   };
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
     setTimeout(() => {
       setRefreshing(false);
-      setDataWithRefreshItem([mockRefreshItem[0], ...mockItemData]);
+      setFilteredData([mockRefreshItem[0], ...mockItemData]);
       setIsEndReached(false);
     }, 3000);
   }, []);
 
   useEffect(() => {
-    setFilteredData(dataWithRefreshItem);
-  }, [dataWithRefreshItem]);
+    setFilteredData(mockItemData);
+  }, [mockItemData]);
 
 
   const onEndReached = () => {
     if (!isEndReached) {
-    setDataWithRefreshItem((prevData) => [...prevData, ...mockOnEndReachedData]);
+      setFilteredData((prevData) => [...prevData, ...mockOnEndReachedData]);
     setIsEndReached(true);}
   };
 
@@ -141,10 +141,11 @@ const styles = StyleSheet.create({
 
 
   item: {
-    width: '90%',
     backgroundColor: colors.primaryBackground,
     margin: 20,
     padding: 10,
+    gap: 20,
+    minHeight: 100,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -161,36 +162,49 @@ const styles = StyleSheet.create({
     borderColor: colors.shadowBorderColor,
   },
 
-  itemContent: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    
+  pizza: {
+    width: 75,
+    height: 75,
+    borderRadius: 10,
+    resizeMode: 'stretch',
   },
 
-    
-  imageContainer: {
-    marginRight: 10,
-    position: 'relative',
+  iconNew: {
+    position: 'absolute',
+    maxHeight: 35,
+    borderRadius: 6,
+    right: -25,
+    top: -10,
+    resizeMode: 'contain',
   },
-
-  textContainer: {
+  
+  wrapRight: {
+    gap: 10,
     flex: 1,
-    maxWidth:170,
-       
   },
-   
-  priceContainer: {
+
+  wrapTitle: {
     flexDirection: 'row',
-    justifyContent: 'space-evenly',
-    marginBottom: 5,
+    alignItems: 'flex-end',
   },
 
   title: {
     fontSize: 20,
     fontWeight: 'bold',
-    marginBottom: 5,
-    textAlign: 'center'
+    textAlign: 'center',
+    flex: 1,
   },
+
+  icon: {
+    width:20,
+    height: 20,
+  },
+ 
+  priceContainer: {
+    flexDirection: 'row',
+    gap: 20,
+  },
+
 
   oldPrice: {
     textDecorationLine: 'line-through',
@@ -201,54 +215,26 @@ const styles = StyleSheet.create({
     color: colors.newPriceColor,
   },
 
+  wrapDesc: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 40,
+  },
+
   description: {
+    flex: 1,
     fontSize: 14,
     color: colors.textColor,
   },
-    
-  pizza: {
-    width: 68,
-    height: 75,
-    borderRadius: 10,
-  },
-  newBadge: {
-    position: 'absolute',
-    top: -5,
-    right: -15,
-    backgroundColor: colors.newBadgeBackground,
-    padding: 4,
-    borderRadius: 10,
+  
+  wrapCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 
-  newBadgeText: {
-    color: colors.newBadgeText,
+  titleCard: {
+    fontSize: 16,
     fontWeight: 'bold',
   },
-
-  iconsContainer: {
-      
-    justifyContent: 'space-between',
-    alignItems: 'flex-end',
-    position: 'absolute',
-    top: 0,
-    right: 0,
-
-  },
-
   
-  likeIcon: {
-    width:20,
-    height: 20,
-    top: 8,
-    right: 5,
-  },
-  
-  cartIcon: {
-    width:20,
-    height: 20,
-    top: 45,
-    right: 5,
-  },
-
-    
 })

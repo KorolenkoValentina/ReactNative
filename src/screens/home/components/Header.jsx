@@ -12,7 +12,7 @@ import {
   Share,
 } from 'react-native';
 
-import {colors} from '../components/Colors'
+import {colors} from '../../../components/Colors'
 import CustomTouchable from '../../../components/CustomTouchable'
 
 
@@ -124,8 +124,7 @@ const Header = ({ onSearch }) => {
  
   return (
     <View style={styles.container}>
-
-       {searchVisible && (
+      {searchVisible && (
         <TextInput
           style={styles.textInput}
           placeholder="Search..."
@@ -133,8 +132,6 @@ const Header = ({ onSearch }) => {
           value={searchText}
         />
       )}
-
-
       <View style={styles.containerIcon}>
         <CustomTouchable onPress={handleSearchIconClick}  >
           <Image style={styles.searchIcon} source={require('../images/header/icon-search.png')} />
@@ -190,7 +187,6 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
     height: 50,
     marginRight: 20,
-    marginTop:20,
   },
 
   containerIcon:{
@@ -249,7 +245,6 @@ const styles = StyleSheet.create({
     borderColor: colors.textColor,
     borderRadius: 5,
     padding: 2,
-    marginTop: 10,
     marginRight:15,
     width: '70%',
     paddingLeft: 15,
@@ -258,7 +253,5 @@ const styles = StyleSheet.create({
   
 })
 
-
-
-    
+   
 export default Header;
