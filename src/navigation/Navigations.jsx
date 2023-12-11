@@ -13,7 +13,6 @@ import HomeScreen from '../screens/home/screens/HomeScreen';
 import PizzaScreen from '../screens/home/screens/PizzaScreen';
 import PromotionsScreen from '../screens/home/screens/PromotionsScreen';
 import SettingsScreen from '../screens/home/screens/SettingsScreen';
-// import ModalScreen from '../screens/home/components/Header';
 import { NavigationContainer} from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import {createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -36,12 +35,12 @@ const Tab = createBottomTabNavigator();
 
 const ModalScreen = ({ navigation }) => {
   const closeModal = () => {
-    navigation.goBack(); // Close the modal
+    navigation.goBack(); 
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.modalText}>This is your modal content</Text>
+      <Text style={styles.modalText}>This is modal content</Text>
       <TouchableOpacity onPress={closeModal}>
         <Text style={styles.closeButton}>Close Modal</Text>
       </TouchableOpacity>
@@ -213,7 +212,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 10,
-    color: 'green', // Adjust the color as needed
+    color: 'green',
   },
 
  

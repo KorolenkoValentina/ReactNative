@@ -15,13 +15,7 @@ import { useNavigation } from '@react-navigation/native'
 import {colors} from '../../../components/Colors'
 import CustomTouchable from '../../../components/CustomTouchable'
 
-// const ModalScreen = () => {
-//   return (
-//     <View style={styles.modalBackground}>
-//       <Text style={styles.title}>Wish List</Text>
-//     </View>
-//   );
-// };
+;
 
 const Header = ({ onSearch }) => {
   const [searchVisible, setSearchVisible] = useState(false);
