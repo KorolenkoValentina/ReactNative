@@ -89,9 +89,9 @@ export default function HomeScreen(props){
 
   const onEndReached = () => {
     if (!isEndReached) {
-      setFilteredData((prevData) => [...prevData, ...mockOnEndReachedData]);
-    setIsEndReached(true);}
-  };
+    setDataWithRefreshItem((prevData) => [...prevData, ...mockOnEndReachedData.slice(0, 5)]);
+    setIsEndReached(true);
+  }
 
 
   const onSearch= (text) => {
