@@ -9,10 +9,12 @@ import {
   
 } from 'react-native';
 
-export default function Settings(){
+export default function SettingsScreen(){
     return(
         <SafeAreaView style={styles.container}>
+            <View style={styles.wrap}>
             <Text style={styles.title}>Hello</Text>
+            </View>
         </SafeAreaView>
     )
 }
@@ -23,8 +25,13 @@ const styles = StyleSheet.create({
         flex: 1, 
         
     },
+    wrap:{
+        flex: 1,
+        justifyContent:'center', 
+        alignItems: 'center',
+    },
   
     title : {
-        color:"red" 
+        color:"red" ,
     }
 })

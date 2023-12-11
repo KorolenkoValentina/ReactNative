@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
 
     item: {
       width: '90%',
-      height:'90%',
+      minHeight:'90%',
       backgroundColor: colors.primaryBackground,
       marginVertical: 30,
       marginHorizontal:20,
@@ -76,13 +76,13 @@ const styles = StyleSheet.create({
       width: 300,
       height: 300,
       borderRadius: 10,
-      marginTop:20
+      marginTop:10
     },
 
     wrapTitle:{
       flexDirection: 'row',
       justifyContent:'space-between',
-      marginBottom:30,
+      marginBottom:20,
     },
 
     title: {
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
     },
 
     description: {
-      fontSize: 18,
+      fontSize: 16,
       color: colors.textColor,
     },
 
