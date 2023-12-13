@@ -4,7 +4,6 @@ import {
   Image,
   View,
   TouchableOpacity ,
-  // SafeAreaView,
   Text
 
 } from 'react-native';
@@ -23,16 +22,6 @@ import {colors} from '../components/Colors'
 const Tab = createBottomTabNavigator();
 
 
-// const ModalScreen = () => {
-//   return (
-//     <SafeAreaView style={styles.modalBackground}>
-//       <View style={styles.modalContent}>
-//       <Text style={styles.title}>Wish List</Text>
-//       </View>
-//     </SafeAreaView>
-//   );
-// };
-
 const ModalScreen = ({ navigation }) => {
   const closeModal = () => {
     navigation.goBack(); 
@@ -40,10 +29,17 @@ const ModalScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.modalText}>This is modal content</Text>
-      <TouchableOpacity onPress={closeModal}>
-        <Text style={styles.closeButton}>Close Modal</Text>
-      </TouchableOpacity>
+      <View style={styles.wrapContent}>
+        <View style={styles.wrapHeader}>
+            <Text style={styles.wraptitle}>Wish List</Text>
+            <TouchableOpacity onPress={closeModal}>
+              <Image source={require('./image/icon-close.png')} style={styles.closeButton}/>
+            </TouchableOpacity>
+        </View>
+        <View  style={styles.wrapImage}>
+          <Image source={require('./image/icon-wishList.png')} style={styles.iconWish}/>
+        </View>
+      </View>
     </View>
   );
 };
@@ -64,7 +60,8 @@ const HomeStack =()=>{
       <HomeStack.Screen
       options={{
         headerShown: false,
-        presentation: 'modal',
+        presentation: 'transparentModal',
+        animation:'slide_from_bottom'
       }}
       name="ModalScreen"
       component={ModalScreen}
@@ -179,34 +176,33 @@ const styles = StyleSheet.create({
     height:24,
     
   },
-  // modalBackground: {
-  //   flex: 1,
-  //   backgroundColor: 'gray',
-  //   justifyContent: 'center',
-  //   alignItems: 'center',
-  // },
-
-  // modalContent: {
-  //   height:"90%",
-   
-  // },
-
+ 
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'gray',
-    padding: 16,
+    marginTop:80,
+    backgroundColor: colors.primaryBackground,
   },
-  modalText: {
-    fontSize: 18,
-    marginBottom: 20,
+
+  wrapContent:{
+    flexDirection:'column',
+    padding:20
+  },
+
+  wrapHeader:{
+    flexDirection:'row',
+    justifyContent:'space-between',
+  },
+
+  wraptitle: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    color: colors.mainColor,
   },
 
   closeButton: {
-    color: 'blue',
-    fontSize: 16,
-    fontWeight: 'bold',
+    width:28,
+    height:28
+
   },
   title: {
     fontSize: 20,
@@ -214,6 +210,17 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     color: 'green',
   },
+
+  wrapImage:{
+    justifyContent:'center',
+    alignItems:'center',
+    paddingTop:250,
+  },
+
+  iconWish:{
+    width:80,
+    height:80
+  }
 
  
 })
