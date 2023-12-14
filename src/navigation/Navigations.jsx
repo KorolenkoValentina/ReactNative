@@ -5,7 +5,8 @@ import {
   Image,
   View,
   TouchableOpacity ,
-  Text
+  Text,
+
 
 } from 'react-native';
 
@@ -13,23 +14,11 @@ import HomeScreen from '../screens/home/screens/HomeScreen';
 import PizzaScreen from '../screens/home/screens/PizzaScreen';
 import PromotionsScreen from '../screens/home/screens/PromotionsScreen';
 import SettingsScreen from '../screens/home/screens/SettingsScreen';
-import { NavigationContainer} from '@react-navigation/native';
+import { NavigationContainer,useNavigation} from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import {createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createDrawerNavigator } from '@react-navigation/drawer';
-
+import { createDrawerNavigator, DrawerItem } from '@react-navigation/drawer';
 import {colors} from '../components/Colors'
-
-// const Drawer = createDrawerNavigator();
-
-// function MyDrawer() {
-//   return (
-//     <Drawer.Navigator>
-//       <Drawer.Screen name="Feed" component={Feed} />
-//       <Drawer.Screen name="Article" component={Article} />
-//     </Drawer.Navigator>
-//   );
-// }
 
 
 const Tab = createBottomTabNavigator();
@@ -60,15 +49,31 @@ const ModalScreen = ({ navigation }) => {
 
 
 const HomeStack =()=>{
+  const navigation = useNavigation();
   const HomeStack = createNativeStackNavigator();
+
+  const MenuIcon = () => (
+    <TouchableOpacity
+      onPress={() => navigation.toggleDrawer()}
+      style={{ marginLeft: 10 }}>
+      <Image
+        source={require('./image/icon-menu.png')}
+        style={{ width: 35, height: 35 }}
+      />
+    </TouchableOpacity>
+  );
+
+
+
   return(
     <HomeStack.Navigator
       screenOptions={{
         headerShown: true,
         headerTitleAlign: 'center',
-        
+        headerLeft: () => (<MenuIcon />)
+
       }}>
-      <HomeStack.Screen name="Home" component={HomeScreen} />
+      <HomeStack.Screen name="Home" component={HomeScreen}/>
       <HomeStack.Screen name="Pizza Details" component={PizzaScreen} />
       <HomeStack.Screen
       options={{
@@ -96,8 +101,6 @@ const PromotionsStack =()=>{
     </PromotionsStack.Navigator>
   )
 }
-
-
 
 
 const TabBarIcon = (prop) => {
@@ -159,7 +162,7 @@ const MyTabs =()=> {
       options={{
         tabBarIcon:TabBarIconPromotions ,
       }}
-       name="Promotions" component={PromotionsStack}/>
+       name="Promotion" component={PromotionsStack}/>
       <Tab.Screen
       options={{
         
@@ -171,11 +174,82 @@ const MyTabs =()=> {
   );
 }
 
+const Drawer = createDrawerNavigator();
+const CustomDrawerContent = ({ navigation, state }) => {
+  const commonItemProps = {
+    activeTintColor: colors.red,
+    activeBackgroundColor: colors.lightgrey,
+    inactiveTintColor: colors.mainColor,
+    style: { width: '100%', borderBottomWidth: 1,padding: 10,
+    marginVertical: 5, },
+  };
+
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <DrawerItem 
+        label="Home"
+        icon={({ size }) => (
+          <Image
+            source={require('./image/icon-home.png')}
+            style={{ width: size, height: size }}
+          />
+        )}
+        focused={state.index === state.routeNames.indexOf('Home')}
+        onPress={() => navigation.navigate('Home')}
+        {...commonItemProps}
+      />
+      <DrawerItem 
+        label="Promotions"
+        icon={({  size  }) => (
+          <Image
+            source={require('./image/promotions-focused.png')}
+            style={{ width: size, height: size}}
+          />
+        )}
+        focused={state.index === state.routeNames.indexOf('Promotions')}
+        onPress={() => navigation.navigate('Promotions')}
+        {...commonItemProps}
+      />
+      <DrawerItem
+        label="Settings"
+        icon={({  size }) => (
+          <Image
+            source={require('./image/settings-focused.png')}
+            style={{ width: size, height: size}}
+          />
+        )}
+        focused={state.index === state.routeNames.indexOf('Settings')}
+        onPress={() => navigation.navigate('Settings')}
+        {...commonItemProps}
+      />
+      
+    </View>
+  );
+};
+
+
+
+const  MyDrawer=()=> {
+  return (
+    <Drawer.Navigator
+      screenOptions={{
+        swipeEnabled: true,
+        headerShown: false,
+      }}
+      drawerContent={(props) => <CustomDrawerContent {...props} />}
+    >
+      <Drawer.Screen name="Home" component={MyTabs} />
+      <Drawer.Screen name="Promotions" component={PromotionsScreen} />
+      <Drawer.Screen name="Settings" component={SettingsScreen} />
+      
+    </Drawer.Navigator>
+  );
+};
+
 export default function Navigator() {
   return (
     <NavigationContainer>
-      
-      <MyTabs/>
+      <MyDrawer/>
     </NavigationContainer>
   );
 }
@@ -183,11 +257,16 @@ export default function Navigator() {
 
 
 const styles = StyleSheet.create({
-
+ 
   icon:{
     width:24,
     height:24,
     
+  },
+  drawerIcon: {
+    width: 50,
+    height: 50,
+    resizeMode: 'contain', 
   },
  
   container: {

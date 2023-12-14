@@ -5,8 +5,6 @@ import {
   TextInput,
   StyleSheet,
   Text,
-  TouchableWithoutFeedback
-  
   
   
 } from 'react-native';
@@ -84,7 +82,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 10,
-    color: 'green', // Adjust the color as needed
+    color: 'green', 
   },
 
   modalButton: {
@@ -95,7 +93,6 @@ const styles = StyleSheet.create({
   searchIcon: {
     width:20,
     height: 20,
-    
     marginRight:10,
   },
 

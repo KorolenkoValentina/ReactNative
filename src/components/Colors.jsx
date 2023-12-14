@@ -5,7 +5,8 @@ export const colors = {
     buttonBackground: 'lightcoral',
     buttonColor: 'white',
     textColor: 'gray',
-    oldPriceColor: 'red',
+    red: 'red',
     newPriceColor: 'green', 
-    mainColor:'maroon' 
+    mainColor:'maroon',
+    lightgrey:'lightgrey' 
 };
