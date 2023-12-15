@@ -18,6 +18,7 @@ import { NavigationContainer,useNavigation} from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import {createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createDrawerNavigator, DrawerItem } from '@react-navigation/drawer';
+import useAppState from '../components/HookUseAppState';
 import {colors} from '../components/Colors'
 
 
@@ -147,7 +148,18 @@ const TabBarIconPromotions =(prop)=>{
 
 
 const MyTabs =()=> {
+  const { appState, imageSource } = useAppState({
+    imageSource: require('../components/image/pizza.jpg'),
+  });
+
   return (
+    <>
+      {appState !== 'active' && (
+        <Image
+          source={imageSource}
+          style={{ width: 100, height: 100 }}
+        />
+      )}
     <Tab.Navigator
     screenOptions={{
       headerShown:false,
@@ -171,6 +183,7 @@ const MyTabs =()=> {
        name="Settings" component={SettingsScreen} />
 
     </Tab.Navigator>
+    </>
   );
 }
 
