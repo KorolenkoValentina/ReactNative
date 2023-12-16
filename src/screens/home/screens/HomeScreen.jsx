@@ -109,16 +109,6 @@ export default function HomeScreen(props){
     
     <SafeAreaView style={styles.container}>
 
-        {/* <TouchableOpacity
-        onPress={() => navigation.toggleDrawer()}
-        style={{ position: 'absolute', left: 10, top: '50%',zIndex: 1 }}>
-        <Image
-          source={require('../../../navigation/image/icon-menuFocused.png')} 
-          style={{ width: 24, height: 24 }}
-        />
-      </TouchableOpacity> */}
-
-
       <Header onSearch={onSearch} />
 
       <FlatList
