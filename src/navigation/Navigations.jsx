@@ -18,7 +18,6 @@ import { NavigationContainer,useNavigation} from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import {createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createDrawerNavigator, DrawerItem } from '@react-navigation/drawer';
-import useAppState from '../components/HookUseAppState';
 import {colors} from '../components/Colors'
 
 
