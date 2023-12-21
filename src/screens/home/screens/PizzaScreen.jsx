@@ -9,11 +9,18 @@ import {
   
 } from 'react-native';
 
+import  orderStore from '../store/index';
 import CustomTouchable from '../../../components/CustomTouchable'
 import {colors} from '../../../components/Colors'
 
 export default function PizzaScreen({ route }) {
+
   const { item } = route.params;
+ 
+  const onPress = (item) => {
+    orderStore.setOrders(item);
+  };
+
 
   return (
     <SafeAreaView style={styles.container}>
@@ -32,7 +39,7 @@ export default function PizzaScreen({ route }) {
               <Text style={styles.titlePrice}>Price:</Text>
               <Text style={styles.price}>{item.newPrice}</Text>
             </View>
-            <CustomTouchable style={styles.buttonContainer}>
+            <CustomTouchable style={styles.buttonContainer} onPress={() => onPress(item)}>
               <View style={styles.buttonContent}>
               <Text style={styles.text}>Get</Text>
               <Image source={require('../images/homeScreen/icon-basket.png')} style={styles.cartIcon}/>

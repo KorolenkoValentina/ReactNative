@@ -1,5 +1,5 @@
-import React, { useState, useEffect} from 'react';
-import {useNavigation} from '@react-navigation/native';
+import React, { useState, useEffect, useCallback} from 'react';
+
 import {
   SafeAreaView,
   View,
@@ -16,6 +16,8 @@ import {
 import Header from '../components/Header';
 import {colors} from '../../../components/Colors'
 import {mockItemData, mockOnEndReachedData } from '../components/MockData';
+import orderStore from '../store/index';
+import { observer } from 'mobx-react';
 
    
 
@@ -31,48 +33,14 @@ const mockRefreshItem = [
 ];
 
 
-const Item = ({ title, image, oldPrice, newPrice, description, isNew, onPress }) => (
-  <TouchableOpacity onPress={() => onPress({ title, image, oldPrice, newPrice, description, isNew })} activeOpacity={1}>
-    <View style={styles.item}>
-   
-      <View style={styles.imageContainer}>
-        <Image source={image} style={styles.pizza} />
-        {isNew && <Image style={styles.iconNew} source={require('../images/homeScreen/icon-new.png')}></Image>}
-      </View>
-      <View style={styles.wrapRight}>
-        <View style={styles.wrapTitle}>
-          <Text style={styles.title}>{title}</Text>
-          <Image source={require('../images/header/icon-like.png')} style={styles.icon}/>
-        </View>
-        <View style={styles.priceContainer}>
-          <Text style={styles.oldPrice}>{oldPrice}</Text>
-          <Text style={styles.newPrice}>{newPrice}</Text>
-        </View>
-        <View style={styles.wrapDesc}>
-          <Text numberOfLines={1} ellipsizeMode="tail" style={styles.description}>{description}</Text>
-          <View style={styles.wrapCard}>
-            <Text style={styles.titleCard}>Buy</Text>
-            <Image source={require('../images/homeScreen/icon-basket.png')} style={styles.icon}/>
-          </View>
-        </View>
-      </View>
-    </View>
-  </TouchableOpacity>
-);
 
-  
-export default function HomeScreen(props){
+ function HomeScreen({navigation}){
  
   const [filteredData, setFilteredData] = useState(mockItemData);
   const [refreshing, setRefreshing] = useState(false);
   const [isEndReached, setIsEndReached] = useState(false);
 
-  const navigation = useNavigation();
-  
-  const onPress = (item) => {
-    navigation.navigate('Pizza Details', { item });
-  };
-
+ 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
     setTimeout(() => {
@@ -93,8 +61,6 @@ export default function HomeScreen(props){
     setIsEndReached(true);}
   };
 
-
-
   const onSearch= (text) => {
     const filteredItems = mockItemData.filter((item) =>
       item.title.toLowerCase().includes(text.toLowerCase()) 
@@ -103,27 +69,59 @@ export default function HomeScreen(props){
   };
 
 
+  const renderItem = useCallback(({item , index}) =>{
+    console.log(item);
 
-  return (
+    const onItemPress=(item)=>{
+    navigation.navigate('Pizza Details', { item });
+    }
 
-    
+
+    const onItemBuy =(item)=>{
+      orderStore.setOrders (item);
+       
+    };
+    return (
+      <TouchableOpacity onPress={() => onItemPress(item)} activeOpacity={1}>
+      <View style={styles.item}>
+     
+     <View style={styles.imageContainer}>
+       <Image source={item.image} style={styles.pizza} />
+       {item.isNew && <Image style={styles.iconNew} source={require('../images/homeScreen/icon-new.png')}></Image>}
+     </View>
+     <View style={styles.wrapRight}>
+       <View style={styles.wrapTitle}>
+         <Text style={styles.title}>{item.title}</Text>
+         <Image source={require('../images/header/icon-like.png')} style={styles.icon}/>
+       </View>
+       <View style={styles.priceContainer}>
+         <Text style={styles.oldPrice}>{item.oldPrice}</Text>
+         <Text style={styles.newPrice}>{item.newPrice}</Text>
+       </View>
+       <View style={styles.wrapDesc}>
+         <Text numberOfLines={1} ellipsizeMode="tail" style={styles.description}>{item.description}</Text>
+         <TouchableOpacity style={styles.wrapCard}  onPress={() => onItemBuy(item)}>
+           <Text style={styles.titleCard}>Buy</Text>
+           <Image source={require('../images/homeScreen/icon-basket.png')} style={styles.icon}/>
+         </TouchableOpacity>
+       </View>
+     </View>
+    </View>
+    </TouchableOpacity>
+      )
+  },[]);
+
+
+
+  return(
+
     <SafeAreaView style={styles.container}>
 
       <Header onSearch={onSearch} />
-
-      <FlatList
-        data={filteredData}
-         renderItem={({ item }) => (
-          <Item onPress={onPress}
-            title={item.title}
-            image={item.image}
-            oldPrice={item.oldPrice}
-            newPrice={item.newPrice}
-            description={item.description}
-            isNew={item.isNew}
-          />
-        )}
-        keyExtractor={(item) => item.id}
+       <FlatList
+         data={filteredData}
+         renderItem={ renderItem } 
+         keyExtractor={(item) => item.id}
         // onRefresh={onRefresh} 
         // refreshing={refreshing} 
         refreshControl={
@@ -135,6 +133,7 @@ export default function HomeScreen(props){
     </SafeAreaView>
   );
 };
+
   
 const styles = StyleSheet.create({
   container: {
@@ -242,3 +241,5 @@ const styles = StyleSheet.create({
   },
   
 })
+
+export default observer (HomeScreen)

@@ -14,11 +14,16 @@ import HomeScreen from '../screens/home/screens/HomeScreen';
 import PizzaScreen from '../screens/home/screens/PizzaScreen';
 import PromotionsScreen from '../screens/home/screens/PromotionsScreen';
 import SettingsScreen from '../screens/home/screens/SettingsScreen';
+import BasketScreen from '../screens/home/screens/BasketScreen';
+
 import { NavigationContainer,useNavigation} from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import {createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createDrawerNavigator, DrawerItem } from '@react-navigation/drawer';
+import { observer } from 'mobx-react-lite';
+import orderStore from '../screens/home/store/index';
 import {colors} from '../components/Colors'
+
 
 
 const Tab = createBottomTabNavigator();
@@ -145,6 +150,30 @@ const TabBarIconPromotions =(prop)=>{
   
 }
 
+const TabBarIconBasket = observer((prop) => {
+  const iconSource = prop.focused
+
+    ? require('./image/icon-shopping-cart-focused.png')
+    : require('./image/icon-shopping-cart.png');
+
+    const ordersCount = orderStore.totalItems;
+  return (
+    <View style={styles.iconContainer}>
+    {ordersCount > 0 && (
+    <View style={styles.badgeContainer}>
+      <Text style={styles.badgeText}>{ordersCount }</Text>
+    </View>
+     )} 
+    <Image 
+      style={styles.icon}
+      source={iconSource}
+    />
+    </View>
+  )
+  
+})
+
+
 
 const MyTabs =()=> {
   
@@ -168,9 +197,18 @@ const MyTabs =()=> {
       <Tab.Screen
       options={{
         
-        tabBarIcon:TabBarIconSetting
+        tabBarIcon:TabBarIconSetting,
       }}
        name="Settings" component={SettingsScreen} />
+
+      <Tab.Screen
+      options={{
+        tabBarIcon: function Icon () { 
+          return <TabBarIconBasket />
+        },
+
+      }}
+       name="Cart" component={BasketScreen} />
 
     </Tab.Navigator>
   );
@@ -243,7 +281,7 @@ const  MyDrawer=()=> {
       <Drawer.Screen name="Home" component={MyTabs} />
       <Drawer.Screen name="Promotions" component={PromotionsScreen} />
       <Drawer.Screen name="Settings" component={SettingsScreen} />
-      
+      <Drawer.Screen name="Basket" component={BasketScreen} />
     </Drawer.Navigator>
   );
 };
@@ -314,8 +352,27 @@ const styles = StyleSheet.create({
   iconWish:{
     width:80,
     height:80
-  }
+  },
 
+  iconContainer: {
+    position: 'relative',
+  },
+
+  badgeContainer: {
+    position: 'absolute',
+    backgroundColor: colors.red,
+    borderRadius: 10,
+    width: 12,
+    height: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex:1,
+    
+  },
+  badgeText: {
+    color: colors.white,
+    fontSize: 8,
+  },
  
 })
 

@@ -3,10 +3,10 @@ import { ImageBackground, StyleSheet } from 'react-native';
 import Navigator from './src/navigation/Navigations';
 import useAppState from './src/components/UseAppState';
 
-
-
 function App() {
   const  {appState}  = useAppState();
+  
+  
   return (
     <>
       {appState !== 'active' ? (
@@ -19,6 +19,7 @@ function App() {
       )}
     </>
   );
+  
 }
 const styles = StyleSheet.create({
  

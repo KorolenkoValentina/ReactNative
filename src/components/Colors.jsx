@@ -8,5 +8,6 @@ export const colors = {
     red: 'red',
     newPriceColor: 'green', 
     mainColor:'maroon',
-    lightgrey:'lightgrey' 
+    lightgrey:'lightgrey',
+    white:'white' 
 };
