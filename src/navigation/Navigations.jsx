@@ -203,8 +203,8 @@ const MyTabs =()=> {
 
       <Tab.Screen
       options={{
-        tabBarIcon: function Icon () { 
-          return <TabBarIconBasket />
+        tabBarIcon: function Icon (props) { 
+          return <TabBarIconBasket {...props} />
         },
 
       }}
