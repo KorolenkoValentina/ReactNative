@@ -18,7 +18,7 @@ import {colors} from '../../../components/Colors'
 import {mockItemData, mockOnEndReachedData } from '../components/MockData';
 import orderStore from '../store/index';
 import { observer } from 'mobx-react';
-
+import Animated, {  useAnimatedScrollHandler, useSharedValue, useAnimatedStyle, interpolate } from 'react-native-reanimated';
    
 
 const mockRefreshItem = [
@@ -33,14 +33,37 @@ const mockRefreshItem = [
 ];
 
 
-
  function HomeScreen({navigation}){
  
   const [filteredData, setFilteredData] = useState(mockItemData);
   const [refreshing, setRefreshing] = useState(false);
   const [isEndReached, setIsEndReached] = useState(false);
 
+  const scrollY = useSharedValue(0);
+  
  
+
+  const scrollHandler = useAnimatedScrollHandler((event) => {
+    scrollY.value = event.contentOffset.y;
+    
+  });
+
+  const animatedTextStyle = useAnimatedStyle(()=>{
+
+    
+    return {
+      paddingTop: interpolate(scrollY.value, [0, 100], [0, 30]),
+      marginBottom: interpolate(scrollY.value, [0, 100], [0, -100]),
+      opacity: interpolate(scrollY.value, [0, 50], [1, 0]),
+      transform: [
+        {
+          translateY: interpolate(scrollY.value, [0, 100], [0, -30]),
+        },
+      ],
+    };
+  });
+
+
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
     setTimeout(() => {
@@ -70,8 +93,7 @@ const mockRefreshItem = [
 
 
   const renderItem = useCallback(({item , index}) =>{
-    console.log(item);
-
+    
     const onItemPress=(item)=>{
     navigation.navigate('Pizza Details', { item });
     }
@@ -116,9 +138,11 @@ const mockRefreshItem = [
   return(
 
     <SafeAreaView style={styles.container}>
-
-      <Header onSearch={onSearch} />
-       <FlatList
+        <Animated.View style={animatedTextStyle}>
+          <Header onSearch={onSearch}/>
+        </Animated.View> 
+       <Animated.FlatList
+         style={{marginTop:30}}
          data={filteredData}
          renderItem={ renderItem } 
          keyExtractor={(item) => item.id}
@@ -129,7 +153,9 @@ const mockRefreshItem = [
         }
         onEndReached={onEndReached}
         onEndReachedThreshold={0.1}
+        onScroll={scrollHandler}
       />
+      
     </SafeAreaView>
   );
 };
@@ -141,7 +167,7 @@ const styles = StyleSheet.create({
     marginTop: StatusBar.currentHeight || 0,
     
   },
-
+ 
 
   item: {
     backgroundColor: colors.primaryBackground,

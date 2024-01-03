@@ -12,8 +12,8 @@ import { useNavigation } from '@react-navigation/native'
 
 import {colors} from '../../../components/Colors'
 import CustomTouchable from '../../../components/CustomTouchable'
+import Animated, { FlipInXUp, FlipOutXUp} from 'react-native-reanimated';
 
-;
 
 const Header = ({ onSearch }) => {
   const [searchVisible, setSearchVisible] = useState(false);
@@ -21,7 +21,7 @@ const Header = ({ onSearch }) => {
 
   const navigation = useNavigation();
 
-  
+
   const openModalScreen = () => {
     navigation.navigate('ModalScreen'); 
   };
@@ -38,14 +38,15 @@ const Header = ({ onSearch }) => {
 
 
   return (
-    <View style={styles.container}>
+    <Animated.View  style={styles.container}>
       {searchVisible && (
+        <Animated.View entering={FlipInXUp} exiting={FlipOutXUp } style={styles.textInput} >
         <TextInput
-          style={styles.textInput}
           placeholder="Search..."
           onChangeText={handleSearch}
           value={searchText}
         />
+       </Animated.View> 
       )}
       <View style={styles.containerIcon}>
         <CustomTouchable onPress={handleSearchIconClick}  >
@@ -59,7 +60,7 @@ const Header = ({ onSearch }) => {
 
      
 
-    </View>
+    </Animated.View>
 
   );
 };
@@ -69,20 +70,18 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-end',
     alignItems: 'flex-end',
-    height: 50,
+    height: 30,
     marginRight: 20,
+    position: 'absolute', 
+    top: 0, 
+    left: 0, 
+    right: 0, 
+    
   },
 
   containerIcon:{
     flexDirection: 'row'
     
-  },
-
-  modalTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 10,
-    color: 'green', 
   },
 
   modalButton: {
@@ -95,9 +94,6 @@ const styles = StyleSheet.create({
     height: 20,
     marginRight:10,
   },
-
-  
-
 
   textInput: {
     borderWidth: 1,
