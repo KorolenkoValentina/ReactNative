@@ -9,14 +9,16 @@ import {
   Image,
   StatusBar,
   RefreshControl,
-  TouchableOpacity
+  TouchableOpacity,
   
 } from 'react-native';
 
 import Header from '../components/Header';
+import CustomSwitch  from '../../../components/CustomSwitch';
 import {colors} from '../../../components/Colors'
 import {mockItemData, mockOnEndReachedData } from '../components/MockData';
 import orderStore from '../store/index';
+import orderWishStore from '../store/indexWishStore';
 import { observer } from 'mobx-react';
 import Animated, {  useAnimatedScrollHandler, useSharedValue, useAnimatedStyle, interpolate } from 'react-native-reanimated';
    
@@ -28,21 +30,22 @@ const mockRefreshItem = [
  image: require('../images/homeScreen/pizza-сaesar.jpg'),
  oldPrice: '$15.99',
  newPrice: '$12.99',
+ size42:'$14.99',
+ selectedSize: 32,
  description: 'Italian pizza with chicken breast, mozzarella cheese, parmesan cheese, quail eggs, tomatoes, iceberg lettuce, provan herbs, béchamel sauce.',
 }
 ];
 
 
- function HomeScreen({navigation}){
+function HomeScreen({navigation}){
  
   const [filteredData, setFilteredData] = useState(mockItemData);
   const [refreshing, setRefreshing] = useState(false);
   const [isEndReached, setIsEndReached] = useState(false);
+  const [likedItems, setLikedItems] = useState({});
 
   const scrollY = useSharedValue(0);
   
- 
-
   const scrollHandler = useAnimatedScrollHandler((event) => {
     scrollY.value = event.contentOffset.y;
     
@@ -91,6 +94,19 @@ const mockRefreshItem = [
     setFilteredData(filteredItems);
   };
 
+  const togglePizzaSize = (item) => {
+    setFilteredData((prevData) => {
+      return prevData.map((prevItem) => {
+        if (prevItem.id === item.id) {
+          return {
+            ...prevItem,
+            selectedSize: prevItem.selectedSize === 32 ? 42 : (prevItem.selectedSize === 42 ? 32 : prevItem.selectedSize),
+          };
+        }
+        return prevItem;
+      });
+    });
+  };
 
   const renderItem = useCallback(({item , index}) =>{
     
@@ -99,10 +115,34 @@ const mockRefreshItem = [
     }
 
 
-    const onItemBuy =(item)=>{
-      orderStore.setOrders (item);
-       
+    const onItemBuy = (item) => {
+      const priceForSize = orderStore.getPriceForSize(item);
+      orderStore.setOrders({ ...item,  price: priceForSize });
     };
+    
+
+    const onItemWish = (item) => {
+      const isItemLiked = likedItems[item.id] || false;
+      const priceForSize = orderWishStore.getPriceForSize(item);
+    
+      if (!isItemLiked) {
+        orderWishStore.setOrdersWish({ ...item, price: priceForSize });
+      } else {
+        orderWishStore.removeOrderWish(item);
+      }
+    
+      setLikedItems((prevLikedItems) => {
+        return {
+          ...prevLikedItems,
+          [item.id]: !isItemLiked,
+        };
+      });
+    };
+    
+    const getPriceForSize=(item)=>{
+      return item.selectedSize === 42 ? item.size42 : item.newPrice;
+    }
+    
     return (
       <TouchableOpacity onPress={() => onItemPress(item)} activeOpacity={1}>
       <View style={styles.item}>
@@ -114,15 +154,27 @@ const mockRefreshItem = [
      <View style={styles.wrapRight}>
        <View style={styles.wrapTitle}>
          <Text style={styles.title}>{item.title}</Text>
-         <Image source={require('../images/header/icon-like.png')} style={styles.icon}/>
+         <TouchableOpacity onPress={() => onItemWish(item, item.selectedSize)}>
+            <Image
+               source={likedItems[item.id] ? require('../images/header/icon-like.png') : require('../images/homeScreen/icon-like.png')}
+              style={styles.icon}
+            />
+          </TouchableOpacity>
+
        </View>
        <View style={styles.priceContainer}>
          <Text style={styles.oldPrice}>{item.oldPrice}</Text>
-         <Text style={styles.newPrice}>{item.newPrice}</Text>
+         <Text style={styles.newPrice}>{getPriceForSize(item)}</Text>
        </View>
+       <View style={styles.switchContainer}>
+          <CustomSwitch label="32 cm" onPress={() => togglePizzaSize(item)} isActive={item.selectedSize === 32} />
+          <CustomSwitch label="42 cm" onPress={() => togglePizzaSize(item)} isActive={item.selectedSize === 42} />
+        </View>
+        
+
        <View style={styles.wrapDesc}>
          <Text numberOfLines={1} ellipsizeMode="tail" style={styles.description}>{item.description}</Text>
-         <TouchableOpacity style={styles.wrapCard}  onPress={() => onItemBuy(item)}>
+         <TouchableOpacity style={styles.wrapCard}  onPress={() => onItemBuy(item, item.selectedSize)}>
            <Text style={styles.titleCard}>Buy</Text>
            <Image source={require('../images/homeScreen/icon-basket.png')} style={styles.icon}/>
          </TouchableOpacity>
@@ -131,9 +183,10 @@ const mockRefreshItem = [
     </View>
     </TouchableOpacity>
       )
-  },[]);
+  },[likedItems]);
 
 
+  
 
   return(
 
@@ -144,7 +197,7 @@ const mockRefreshItem = [
        <Animated.FlatList
          style={{marginTop:30}}
          data={filteredData}
-         renderItem={ renderItem } 
+         renderItem={renderItem}
          keyExtractor={(item) => item.id}
         // onRefresh={onRefresh} 
         // refreshing={refreshing} 
@@ -168,6 +221,9 @@ const styles = StyleSheet.create({
     
   },
  
+  switchContainer: {
+    flexDirection: 'row',
+  },
 
   item: {
     backgroundColor: colors.primaryBackground,
@@ -192,8 +248,8 @@ const styles = StyleSheet.create({
   },
 
   pizza: {
-    width: 75,
-    height: 75,
+    width: 100,
+    height: 100,
     borderRadius: 10,
     resizeMode: 'stretch',
   },

@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState} from 'react';
 
 import {
   SafeAreaView,
@@ -6,21 +6,41 @@ import {
   StyleSheet,
   Text,
   Image,
+  TouchableOpacity ,
   
 } from 'react-native';
 
 import  orderStore from '../store/index';
+import  orderWishStore from '../store/indexWishStore';
 import CustomTouchable from '../../../components/CustomTouchable'
 import {colors} from '../../../components/Colors'
 
-export default function PizzaScreen({ route }) {
 
+export default function PizzaScreen({ route }) {
+  const [likedItems, setLikedItems] = useState({});
   const { item } = route.params;
  
   const onPress = (item) => {
     orderStore.setOrders(item);
   };
 
+
+  const onItemWish = (item) => {
+    const isItemLiked = likedItems[item.id] || false;
+    
+    if (!isItemLiked) {
+      orderWishStore.setOrdersWish(item);
+    } else {
+      orderWishStore.removeOrderWish(item);
+    }
+  
+    setLikedItems((prevLikedItems) => {
+      return {
+        ...prevLikedItems,
+        [item.id]: !isItemLiked,
+      };
+    });
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -31,7 +51,9 @@ export default function PizzaScreen({ route }) {
         <View style={styles.textContainer}>
           <View style={styles.wrapTitle}>
             <Text style={styles.title}>{item.title}</Text>
-            <Image source={require('../images/pizzaScreen/icon-like.png')} style={styles.likeIcon}/>
+            <TouchableOpacity onPress={() => onItemWish(item) }>
+              <Image source={likedItems[item.id] ? require('../images/header/icon-like.png') : require('../images/pizzaScreen/icon-like.png')} style={styles.likeIcon}/>
+            </TouchableOpacity>
           </View>
           <Text style={styles.description}>{item.description}</Text>
           <View style={styles.priceContainer}>

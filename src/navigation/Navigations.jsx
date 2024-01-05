@@ -15,6 +15,9 @@ import PizzaScreen from '../screens/home/screens/PizzaScreen';
 import PromotionsScreen from '../screens/home/screens/PromotionsScreen';
 import SettingsScreen from '../screens/home/screens/SettingsScreen';
 import BasketScreen from '../screens/home/screens/BasketScreen';
+import WishListScreen from '../screens/home/components/WishList';
+import LogInScreen from '../screens/home/screens/LogInScreen';
+import SignUpScreen from '../screens/home/screens/SignUpScreen'
 
 import { NavigationContainer,useNavigation} from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -28,34 +31,14 @@ import {colors} from '../components/Colors'
 
 const Tab = createBottomTabNavigator();
 
-
-const ModalScreen = ({ navigation }) => {
-  const closeModal = () => {
-    navigation.goBack(); 
-  };
-
-  return (
-    <View style={styles.container}>
-      <View style={styles.wrapContent}>
-        <View style={styles.wrapHeader}>
-            <Text style={styles.wraptitle}>Wish List</Text>
-            <TouchableOpacity onPress={closeModal}>
-              <Image source={require('./image/icon-close.png')} style={styles.closeButton}/>
-            </TouchableOpacity>
-        </View>
-        <View  style={styles.wrapImage}>
-          <Image source={require('./image/icon-wishList.png')} style={styles.iconWish}/>
-        </View>
-      </View>
-    </View>
-  );
-};
-
-
-
 const HomeStack =()=>{
   const navigation = useNavigation();
   const HomeStack = createNativeStackNavigator();
+
+  const handleLogInPress = () => {
+    
+    navigation.navigate('Log in'); 
+  };
 
   const MenuIcon = () => (
     <TouchableOpacity
@@ -68,18 +51,31 @@ const HomeStack =()=>{
     </TouchableOpacity>
   );
 
-
+  const LogIn = ()=>(
+    <TouchableOpacity
+      onPress={handleLogInPress}
+      style={{ marginRight:10}}>
+      <Image
+        source={require('./image/icon-person.png')}
+        style={{ width: 30, height: 30 }}
+      />
+    </TouchableOpacity>
+  
+  )
 
   return(
     <HomeStack.Navigator
       screenOptions={{
         headerShown: true,
         headerTitleAlign: 'center',
-        headerLeft: () => (<MenuIcon />)
+        headerLeft: () => (<MenuIcon />),
+        headerRight: ()=>(<LogIn/>),
 
       }}>
       <HomeStack.Screen name="Home" component={HomeScreen}/>
       <HomeStack.Screen name="Pizza Details" component={PizzaScreen} />
+      <HomeStack.Screen name="Log in" component={LogInScreen} />
+      <HomeStack.Screen name="Sign Up" component={SignUpScreen} />
       <HomeStack.Screen
       options={{
         headerShown: false,
@@ -87,11 +83,13 @@ const HomeStack =()=>{
         animation:'slide_from_bottom'
       }}
       name="ModalScreen"
-      component={ModalScreen}
+      component={WishListScreen}
       />
     </HomeStack.Navigator>
   )
 }
+
+
 
 const PromotionsStack =()=>{
   const PromotionsStack = createNativeStackNavigator();
@@ -309,49 +307,11 @@ const styles = StyleSheet.create({
     resizeMode: 'contain', 
   },
  
-  container: {
-    flex: 1,
-    marginTop:80,
-    backgroundColor: colors.primaryBackground,
-  },
-
-  wrapContent:{
-    flexDirection:'column',
-    padding:20
-  },
-
-  wrapHeader:{
-    flexDirection:'row',
-    justifyContent:'space-between',
-  },
-
-  wraptitle: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    color: colors.mainColor,
-  },
-
-  closeButton: {
-    width:28,
-    height:28
-
-  },
   title: {
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 10,
     color: 'green',
-  },
-
-  wrapImage:{
-    justifyContent:'center',
-    alignItems:'center',
-    paddingTop:250,
-  },
-
-  iconWish:{
-    width:80,
-    height:80
   },
 
   iconContainer: {

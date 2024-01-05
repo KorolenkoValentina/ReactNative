@@ -4,6 +4,7 @@ import { observer } from 'mobx-react-lite';
 import orderStore from '../store/index';
 import {colors} from '../../../components/Colors'
 
+
 const BasketScreen = () => {
   const [confirmationMessage, setConfirmationMessage] = useState('');
   
@@ -30,6 +31,7 @@ const BasketScreen = () => {
       
     }, 2000);
   };
+  
 
   const renderItem = ({ item }) => (
     
@@ -48,7 +50,7 @@ const BasketScreen = () => {
           <View style={styles.priceContainer}>
             <View style={styles.priceText}>
               <Text style={styles.titlePrice}>Price:</Text>
-              <Text style={styles.price}>{item.newPrice}</Text>
+              <Text style={styles.price}>{orderStore.getPriceForSize(item)}</Text>
             </View>
             <View style={styles.quantityContainer}>
               <TouchableOpacity onPress={() => orderStore.increaseQuantity(item)}>
@@ -105,7 +107,7 @@ const BasketScreen = () => {
       
     </SafeAreaView>
   );
-  }
+}
 
 const styles = StyleSheet.create({
   container: {
