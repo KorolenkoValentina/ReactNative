@@ -19,8 +19,8 @@ class OrderWishStore{
   }
   
 
-  @action removeOrder(orderItem) {
-    this.orders = this.orders.filter((item) => item !== orderItem);
+  @action removeOrderWish(orderItem) {
+    this.orders = this.orders.filter(item => item.id !== orderItem.id);
   }
 
 
