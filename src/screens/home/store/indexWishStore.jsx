@@ -19,7 +19,7 @@ class OrderWishStore{
   }
   
 
-  @action removeOrder(orderItem) {
+  @action removeOrderWish(orderItem) {
     this.orders = this.orders.filter((item) => item !== orderItem);
   }
 
