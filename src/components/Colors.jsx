@@ -9,5 +9,7 @@ export const colors = {
     newPriceColor: 'green', 
     mainColor:'maroon',
     lightgrey:'lightgrey',
-    white:'white' 
+    white:'white' ,
+    backgroundModal: 'seashell',
+    black:'#000000'
 };
