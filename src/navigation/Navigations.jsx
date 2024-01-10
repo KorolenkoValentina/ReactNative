@@ -17,7 +17,7 @@ import SettingsScreen from '../screens/home/screens/SettingsScreen';
 import BasketScreen from '../screens/home/screens/BasketScreen';
 import WishListScreen from '../screens/home/components/WishList';
 import LogInScreen from '../screens/home/screens/LogInScreen';
-import SignUpScreen from '../screens/home/screens/SignUpScreen'
+import SignUpScreen from '../screens/home/screens/SignUpScreen';
 
 import { NavigationContainer,useNavigation} from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';

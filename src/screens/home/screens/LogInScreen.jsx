@@ -66,8 +66,9 @@ export default function  LogInScreen (){
             
                 <View style={styles.wrapTitle}>
                     <Text style={styles.title}>Forgot your password?</Text>
-                    <Text style={styles.title} onPress={navigateToSignUp}> Sign up</Text>
-
+                    <CustomTouchable>
+                        <Text style={[styles.title, { color: colors.mainColor }]} onPress={navigateToSignUp}> Sign up</Text>
+                    </CustomTouchable>
                 </View>
             
             </View>
@@ -118,16 +119,17 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         paddingVertical: 10,
         paddingHorizontal: 18,
+        
     },
 
     titleButton: {
         fontSize: 16,
         color: colors.buttonColor, 
-       
+        textAlign:'center'
     },
 
     title:{
-        fontSize:12,
+        fontSize:14,
         marginTop:30
     },
     eyeIcon: {

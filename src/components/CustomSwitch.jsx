@@ -12,6 +12,7 @@ import { colors } from './Colors';
 
 
 const CustomSwitch = ({ label, onPress, isActive }) => {
+
     return (
       <TouchableOpacity style={[styles.switch, isActive && styles.activeSwitch]} onPress={onPress}>
         <Image

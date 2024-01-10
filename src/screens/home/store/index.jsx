@@ -15,18 +15,27 @@ class OrderStore{
       existingOrder.quantity += 1;
     } else {
       runInAction(() => {
-        this.orders = [...this.orders, { ...orderItem, quantity: 1 }];
+        this.orders = [...this.orders, { ...orderItem, quantity: 1}];
       });
     }
   }
   
   getPriceForSize(item) {
-    return item.selectedSize === 42 ? item.size42 : item.newPrice;
+    const basePrice = item.selectedSize === 42 ? (item.size42 || '0') : (item.newPrice || '0');
+    const toppingsPrice = (item.selectedToppings || []).reduce((toppingTotal, topping) => {
+      const toppingPrice = topping.price || '0';
+      return toppingTotal + parseFloat(toppingPrice.replace('$', ''));
+    }, 0);
+  
+    return (parseFloat(basePrice.replace('$', '')) + toppingsPrice).toFixed(2);
   }
+
+
   
   @computed get totalItems() {
     return this.orders.reduce((total, item) => total + item.quantity, 0);
   }
+  
 
   @action removeOrder(orderItem) {
     this.orders = this.orders.filter((item) => item !== orderItem);
@@ -56,18 +65,26 @@ class OrderStore{
 
 
   @action calculateTotal() {
+    
     const rounding = (value) => value.toFixed(2);
   
     const totalAmount = rounding(
-      this.orders.reduce(
-        (total, item) =>
-          total +
-          (item.selectedSize === 42
-            ? parseFloat(item.size42.replace('$', '')) * item.quantity
-            : parseFloat(item.newPrice.replace('$', '')) * item.quantity),
-        0
-      )
+      this.orders.reduce((total, item) => {
+        const basePrice = item.selectedSize === 42
+          ? parseFloat(item.size42.replace('$', ''))
+          : parseFloat(item.newPrice.replace('$', ''));
+  
+        const toppingsPrice =  Array.isArray(item.selectedToppings)
+          ?item.selectedToppings.reduce((toppingTotal, topping) => {
+          const toppingPrice = topping.price || '0';
+          return toppingTotal + parseFloat(toppingPrice.replace('$', ''));
+        }, 0)
+        :0;
+  
+        return total + (basePrice + toppingsPrice) * item.quantity;
+      }, 0)
     );
+
   
     const totalDiscount = rounding(
       this.orders.reduce(
@@ -80,6 +97,7 @@ class OrderStore{
   
     return { totalAmount, totalDiscount };
   }
+  
   
 }
 
