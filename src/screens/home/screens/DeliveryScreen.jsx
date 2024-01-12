@@ -1,5 +1,6 @@
 
 import React from 'react';
+import MapView, { Marker } from 'react-native-maps';
 
 import {
   SafeAreaView,
@@ -22,6 +23,19 @@ export default function DeliveryScreen() {
       <ScrollView style={styles.wrapDelivery}>
         <Text style={styles.deliveryTitle}>Terms of delivery</Text>
         <Text style={styles.deliverySubtitle}>Delivery time from 10a.m - 21p.m</Text>
+        <View style={styles.mapContainer}>
+          <MapView
+            style={styles.map}
+            region={{
+              latitude: YOUR_LATITUDE,
+              longitude: YOUR_LONGITUDE,
+              latitudeDelta: 0.0922,
+              longitudeDelta: 0.0421,
+            }}
+          >
+            <Marker coordinate={{ latitude: YOUR_LATITUDE, longitude: YOUR_LONGITUDE }} title="Delivery Location" />
+          </MapView>
+        </View>
         <View >
             <Text style={styles.deliveryTitle}>Payment options</Text>
             
@@ -82,6 +96,13 @@ const styles = StyleSheet.create({
     // justifyContent:'center',
     // alignItems:'center'
 
+  },
+  mapContainer: {
+    height: 200, // Adjust the height as needed
+    marginVertical: 10,
+  },
+  map: {
+    ...StyleSheet.absoluteFillObject,
   },
 
   deliveryTitle:{
