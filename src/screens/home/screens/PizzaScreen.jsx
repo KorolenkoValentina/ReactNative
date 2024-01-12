@@ -23,9 +23,10 @@ const PizzaScreen = ({ route})=> {
   const [selectedToppings, setSelectedToppings] = useState([]);
   const [totalPrice, setTotalPrice] = useState();
   const [selectedCategory, setSelectedCategory] = useState(null);
-  const [likedItems, setLikedItems] = useState({});
+  
+  const { item, togglePizzaSize } = route.params;
 
-  const { item, onTogglePizzaSize } = route.params;
+  
 
   useEffect(() => {
     updateTotalPrice(selectedToppings);
@@ -50,22 +51,17 @@ const PizzaScreen = ({ route})=> {
   
   const selectedSize = item && item.selectedSize ? item.selectedSize : 0;
 
+  const isItemLiked = orderWishStore.isItemLiked(item) ;
 
   const onItemWish = (item) => {
-    const isItemLiked = likedItems[item.id] || false;
+    
+    const priceForSize = orderWishStore.getPriceForSize(item);
     
     if (!isItemLiked) {
-      orderWishStore.setOrdersWish(item);
+      orderWishStore.setOrdersWish({ ...item, price: priceForSize });
     } else {
       orderWishStore.removeOrderWish(item);
     }
-  
-    setLikedItems((prevLikedItems) => {
-      return {
-        ...prevLikedItems,
-        [item.id]: !isItemLiked,
-      };
-    });
   };
 
   const onPressProduct = (item) => {
@@ -92,8 +88,7 @@ const PizzaScreen = ({ route})=> {
   
     const toppingsPrice = toppings.reduce((toppingTotal, topping) => toppingTotal + parseFloat(topping.price.replace('$', '')), 0);
     const newTotalPrice =  rounding(basePrice + toppingsPrice);
-  
-    
+
     setTotalPrice(newTotalPrice);
   };
 
@@ -143,13 +138,13 @@ const PizzaScreen = ({ route})=> {
           <View style={styles.wrapTitle}>
             <Text style={styles.title}>{item.title}</Text>
             <TouchableOpacity onPress={() =>onItemWish(item, item.selectedSize)}>
-              <Image source={likedItems[item.id] ? require('../images/header/icon-like.png') : require('../images/pizzaScreen/icon-like.png')} style={styles.likeIcon}/>
+              <Image source={orderWishStore.isItemLiked(item) ? require('../images/header/icon-like.png') : require('../images/pizzaScreen/icon-like.png')} style={styles.likeIcon}/>
             </TouchableOpacity>
           </View>
           <Text style={styles.description}>{item.description}</Text>
           <View style={styles.switchContainer}>
-            <CustomSwitch label="32 cm" onPress={() => onTogglePizzaSize(item)} isActive={selectedSize === 32} />
-            <CustomSwitch label="42 cm" onPress={() => onTogglePizzaSize(item)} isActive={selectedSize === 42} />
+            <CustomSwitch label="32 cm" onPress={() => togglePizzaSize(item)} isActive={item.selectedSize === 32} />
+            <CustomSwitch label="42 cm" onPress={() => togglePizzaSize(item)} isActive={item.selectedSize === 42} />
           </View>
           <View style={styles.toppingContainer}>
             <Text style={styles.toppingTitle}> Add topping</Text>
@@ -174,6 +169,7 @@ const PizzaScreen = ({ route})=> {
             <View style={styles.priceText}>
               <Text style={styles.titlePrice}>Price:</Text>
               <Text style={styles.price}>${totalPrice}</Text>
+              {/* <Text style={styles.price}>{ orderStore.getPriceForSize(item)}</Text> */}
             </View>
             <CustomTouchable style={styles.buttonContainer} onPress={() => onPress(item)}>
               <View style={styles.buttonContent}>
@@ -217,7 +213,7 @@ const styles = StyleSheet.create({
   },
 
   item: {
-      // width: '90%',
+    
     backgroundColor: colors.primaryBackground,
     marginVertical: 30,
     marginHorizontal:20,

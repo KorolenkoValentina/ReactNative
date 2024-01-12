@@ -45,8 +45,8 @@ const ModalLikeScreen = () => {
                         source={ require('../images/header/icon-like.png')}
                         style={styles.icon}
                     />
-                    {/* <Text style={styles.titleCard}>Add</Text> */}
-                    <Text style={styles.titleCard}>Add</Text>
+                    <Text style={styles.titleCard}>{orderWishStore.isRemoveAction  ? 'Delete' : 'Add'}</Text>
+                   
                 </View>
            </View>
         ) : null;

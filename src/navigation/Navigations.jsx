@@ -18,6 +18,11 @@ import BasketScreen from '../screens/home/screens/BasketScreen';
 import WishListScreen from '../screens/home/components/WishList';
 import LogInScreen from '../screens/home/screens/LogInScreen';
 import SignUpScreen from '../screens/home/screens/SignUpScreen';
+import AboutUsScreen from '../screens/home/screens/AboutUsScreen';
+import DeliveryScreen from '../screens/home/screens/DeliveryScreen';
+import ContactsScreen from '../screens/home/screens/ContactsScreen';
+
+
 
 import { NavigationContainer,useNavigation} from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -26,6 +31,7 @@ import { createDrawerNavigator, DrawerItem } from '@react-navigation/drawer';
 import { observer } from 'mobx-react-lite';
 import orderStore from '../screens/home/store/index';
 import {colors} from '../components/Colors'
+
 
 
 
@@ -102,6 +108,24 @@ const PromotionsStack =()=>{
       }}>
       <PromotionsStack.Screen name="Promotions" component={PromotionsScreen}/>
     </PromotionsStack.Navigator>
+  )
+}
+
+
+const SettingsStack =()=>{
+  const SettingsStack = createNativeStackNavigator();
+  return(
+    <SettingsStack.Navigator
+      screenOptions={{
+        headerShown: true,
+        headerTitleAlign: 'center',
+        
+      }}>
+      <SettingsStack.Screen name="Setting" component={SettingsScreen}/>
+      <SettingsStack.Screen name="About Us" component={AboutUsScreen}/>
+      <SettingsStack.Screen name="Delivery and payment" component={DeliveryScreen}/>
+      <SettingsStack.Screen name="Contacts" component={ContactsScreen}/>
+    </SettingsStack.Navigator>
   )
 }
 
@@ -197,7 +221,7 @@ const MyTabs =()=> {
         
         tabBarIcon:TabBarIconSetting,
       }}
-       name="Settings" component={SettingsScreen} />
+       name="Settings" component={SettingsStack} />
 
       <Tab.Screen
       options={{

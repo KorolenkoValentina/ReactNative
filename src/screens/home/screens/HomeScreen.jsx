@@ -15,6 +15,7 @@ import Header from '../components/Header';
 import {mockItemData, mockOnEndReachedData } from '../components/MockData';
 import { observer } from 'mobx-react';
 import Item from '../components/ItemList'
+import orderStore from '../store/index'
 import Animated, {  useAnimatedScrollHandler, useSharedValue, useAnimatedStyle, interpolate } from 'react-native-reanimated';
    
 
@@ -88,7 +89,8 @@ function HomeScreen(){
     setFilteredData(filteredItems);
   };
 
-  const togglePizzaSize = (item) => {
+  const togglePizzaSize = (item) => {  
+    console.log("Toggle Pizza Size in PizzaScreen");
     setFilteredData((prevData) => {
       return prevData.map((prevItem) => {
         if (prevItem.id === item.id) {
@@ -100,7 +102,8 @@ function HomeScreen(){
         return prevItem;
       });
     });
-};
+  };
+
 
   const renderItem = ({item , index}) => <Item item={item}  index={index} togglePizzaSize={togglePizzaSize}/>
   

@@ -24,12 +24,12 @@ const WishListScreen = ({ navigation }) => {
     };
     
     const onItemRemove = (item) => {
-        orderWishStore.removeOrderWish(item);
+        orderWishStore.removeOrderWishItem(item);
     };
 
     const onItemBuy =(item)=>{
         orderStore.setOrders (item);
-        orderWishStore.removeOrderWish(item);
+        orderWishStore.removeOrderWishItem(item);
          
     };
    

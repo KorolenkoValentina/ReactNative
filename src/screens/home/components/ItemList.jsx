@@ -28,37 +28,30 @@ const Item = ({item , index, togglePizzaSize }) =>{
   const navigation = useNavigation();
   
   const onItemPress = (item) => {
-    navigation.navigate('Pizza Details', { item, onTogglePizzaSize: togglePizzaSize });
+    navigation.navigate('Pizza Details', { item, togglePizzaSize: togglePizzaSize });
   };
  
-  // const onItemBuy = (item, topping) => {
-  //   const toppings = item.selectedToppings || [];
-  //   const toppingPrice = topping.price || ''; 
-    
-  //   const priceForSize = orderStore.getPriceForSize({item, selectedToppings: toppings, toppingPrice });
-  //   orderStore.setOrders({ ...item,  price: priceForSize });
-  // };
   const onItemBuy = (item) => {
     const priceForSize = orderStore.getPriceForSize(item );
     orderStore.setOrders({ ...item,  price: priceForSize });
   };
 
-    
-  const isItemLiked = orderWishStore.orders.find((wishItem)=>(item.id === wishItem.id))
-  
+
   const onItemWish = (item) => {
-      const priceForSize = orderWishStore.getPriceForSize(item);
+    const isItemLiked = orderWishStore.isItemLiked(item);
+    const priceForSize = orderWishStore.getPriceForSize(item);
     
-      if (!isItemLiked) {
-        orderWishStore.setOrdersWish({ ...item, price: priceForSize });
-      } else {
-        orderWishStore.removeOrderWish(item);
-      }
+    if (!isItemLiked) {
+      orderWishStore.setOrdersWish({ ...item, price: priceForSize });
+    } else {
+      orderWishStore.removeOrderWish(item);
+    }
   };
     
   const getPriceForSize=(item)=>{
     return item.selectedSize === 42 ? item.size42 : item.newPrice;
   }
+  
 
   
   return (
@@ -75,13 +68,13 @@ const Item = ({item , index, togglePizzaSize }) =>{
          <Modal
             transparent={true}
             visible={orderWishStore.modalVisible}>
-            <ModalLikeScreen orderWishStore={orderWishStore} />
+            <ModalLikeScreen item={orderWishStore.lastLikedItem} orderWishStore={orderWishStore} />
             
           </Modal> 
   
          <TouchableOpacity onPress={() => onItemWish(item, item.selectedSize)}>
             <Image
-               source={isItemLiked ? require('../images/header/icon-like.png') : require('../images/homeScreen/icon-like.png')}
+               source={orderWishStore.isItemLiked(item) ? require('../images/header/icon-like.png') : require('../images/homeScreen/icon-like.png')}
               style={styles.icon}
             />
           </TouchableOpacity>

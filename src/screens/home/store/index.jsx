@@ -30,6 +30,18 @@ class OrderStore{
     return (parseFloat(basePrice.replace('$', '')) + toppingsPrice).toFixed(2);
   }
 
+  @action togglePizzaSize(item) {
+    this.orders = this.orders.map((orderItem) => {
+      if (orderItem.id === item.id && orderItem.selectedSize === item.selectedSize) {
+        return {
+          ...orderItem,
+          selectedSize: orderItem.selectedSize === 32 ? 42 : 32,
+        };
+      }
+      return orderItem;
+    });
+  }
+
 
   
   @computed get totalItems() {
