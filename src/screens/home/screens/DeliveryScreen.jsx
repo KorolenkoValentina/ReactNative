@@ -20,20 +20,19 @@ export default function DeliveryScreen() {
   return (
     <SafeAreaView style={styles.container}>
         
-      <ScrollView style={styles.wrapDelivery}>
+      <ScrollView style={styles.wrapDelivery} showsVerticalScrollIndicator={false}>
         <Text style={styles.deliveryTitle}>Terms of delivery</Text>
         <Text style={styles.deliverySubtitle}>Delivery time from 10a.m - 21p.m</Text>
         <View style={styles.mapContainer}>
           <MapView
             style={styles.map}
             region={{
-              latitude: YOUR_LATITUDE,
-              longitude: YOUR_LONGITUDE,
-              latitudeDelta: 0.0922,
-              longitudeDelta: 0.0421,
-            }}
-          >
-            <Marker coordinate={{ latitude: YOUR_LATITUDE, longitude: YOUR_LONGITUDE }} title="Delivery Location" />
+            latitude: 37.7749, 
+            longitude: -122.4194, 
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.0421,
+            }}>
+            <Marker coordinate={{ latitude: 37.7749, longitude: -122.4194 }} title="Delivery Location" />
           </MapView>
         </View>
         <View >

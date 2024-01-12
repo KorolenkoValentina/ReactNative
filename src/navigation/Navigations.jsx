@@ -121,7 +121,7 @@ const SettingsStack =()=>{
         headerTitleAlign: 'center',
         
       }}>
-      <SettingsStack.Screen name="Setting" component={SettingsScreen}/>
+      <SettingsStack.Screen name="Settings" component={SettingsScreen}/>
       <SettingsStack.Screen name="About Us" component={AboutUsScreen}/>
       <SettingsStack.Screen name="Delivery and payment" component={DeliveryScreen}/>
       <SettingsStack.Screen name="Contacts" component={ContactsScreen}/>
@@ -221,7 +221,7 @@ const MyTabs =()=> {
         
         tabBarIcon:TabBarIconSetting,
       }}
-       name="Settings" component={SettingsStack} />
+       name="Setting" component={SettingsStack} />
 
       <Tab.Screen
       options={{

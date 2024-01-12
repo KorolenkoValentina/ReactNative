@@ -134,14 +134,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  contactsTitle:{
-    marginLeft:20
-
-  },
 
   contactsTitle:{
     fontSize:22,
-    fontWeight:'bold'
+    fontWeight:'bold',
+    margin:20,
+    color:colors.mainColor
 
   },
   contactsItem:{
@@ -170,7 +168,7 @@ const styles = StyleSheet.create({
   contactsText:{
     fontSize:16,
     color:colors.textColor,
-    
+    marginBottom:5
   },
   addressItem:{
 
