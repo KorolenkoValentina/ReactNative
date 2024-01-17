@@ -115,6 +115,7 @@ export default function AboutUsScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor:colors.lightgrey
   },
   wrap:{
             
@@ -124,14 +125,14 @@ const styles = StyleSheet.create({
   },
       
   title : {
-    color:"red" ,
+    color:colors.orange,
     marginTop:20,
     fontSize:22,
 
   },
   text:{
     fontSize:16,
-    color: colors.mainColor,
+    color: colors.itemBackground,
     textAlign: 'justify',
   },
   carouselItem: {
@@ -148,6 +149,7 @@ const styles = StyleSheet.create({
   },
   description:{
     textAlign: 'justify',
+    color:colors.dark
   },
   textContainer: {
     flex: 1,
@@ -158,8 +160,9 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 8,
+    color:colors.title,
     textDecorationLine: 'underline',
-    textDecorationColor:"red" 
+    
   },
   paginationContainer: {
     flexDirection: 'row',

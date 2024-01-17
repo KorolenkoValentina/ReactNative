@@ -20,20 +20,19 @@ export default function DeliveryScreen() {
   return (
     <SafeAreaView style={styles.container}>
         
-      <ScrollView style={styles.wrapDelivery}>
+      <ScrollView style={styles.wrapDelivery} showsVerticalScrollIndicator={false}>
         <Text style={styles.deliveryTitle}>Terms of delivery</Text>
         <Text style={styles.deliverySubtitle}>Delivery time from 10a.m - 21p.m</Text>
         <View style={styles.mapContainer}>
           <MapView
             style={styles.map}
             region={{
-              latitude: YOUR_LATITUDE,
-              longitude: YOUR_LONGITUDE,
-              latitudeDelta: 0.0922,
-              longitudeDelta: 0.0421,
-            }}
-          >
-            <Marker coordinate={{ latitude: YOUR_LATITUDE, longitude: YOUR_LONGITUDE }} title="Delivery Location" />
+            latitude: 37.7749, 
+            longitude: -122.4194, 
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.0421,
+            }}>
+            <Marker coordinate={{ latitude: 37.7749, longitude: -122.4194 }} title="Delivery Location" />
           </MapView>
         </View>
         <View >
@@ -87,7 +86,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent:'center',
-    alignItems:'center'
+    alignItems:'center',
+    backgroundColor:colors.lightgrey
   },
 
   wrapDelivery:{
@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
 
   },
   mapContainer: {
-    height: 200, // Adjust the height as needed
+    height: 200, 
     marginVertical: 10,
   },
   map: {
@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
   deliveryTitle:{
     fontSize:22,
     fontWeight: 'bold',
-    color: colors.mainColor,
+    color: colors.orange,
     textAlign:'center',
     textDecorationLine: 'underline',
     marginVertical:20
@@ -140,13 +140,14 @@ const styles = StyleSheet.create({
     fontSize:18,
     fontWeight: 'bold',
     marginTop:30,
+    color:colors.grey
     
   },
   deliveryDescription:{
     fontSize:14,
     textAlign: 'center',
     marginTop:10,
-    color:colors.textColor
+    color:colors.mainColor
   }
 
   

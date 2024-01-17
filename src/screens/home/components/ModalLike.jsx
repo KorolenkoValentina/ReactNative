@@ -16,11 +16,12 @@ import { observer } from 'mobx-react-lite';
 
 
 const ModalLikeScreen = () => {
-    
+
+
     
     const renderItem = ({ item }) => {
-
-
+       
+      
         const isLastLikedItem =
         orderWishStore.lastLikedItem && item.id === orderWishStore.lastLikedItem.id && item.selectedSize === orderWishStore.lastLikedItem.selectedSize;
      
@@ -34,11 +35,23 @@ const ModalLikeScreen = () => {
          
                 <View style={styles.wrapRight}>
                    <Text style={styles.title}>{item.title}</Text>
-                   
+
+                   {item.type === 'pizza' ? (
                     <View style={styles.priceContainer}>
+                        
                         <Text style={styles.titlePrice}>Price:</Text>
-                        <Text style={styles.price}>{orderWishStore.getPriceForSize(item)}</Text>
+                        <Text style={styles.price}>{orderWishStore.getPriceForSize(item).pricePizza}</Text>
+                        
                     </View>
+
+                    ) : item.type === 'drink' ? (
+                     <View style={styles.priceContainer}>
+                        <Text style={styles.titlePrice}>Price:</Text>
+                        <Text style={styles.price}>{orderWishStore.getPriceForSize(item).price}</Text>
+                        <Text style={styles.titlePrice}>Volume:</Text>
+                        <Text style={styles.price}>{orderWishStore.getPriceForSize(item).volume}</Text>
+                    </View> 
+                    ) : null}
                 </View>
                 <View style={styles.wrapLeft}>
                     <Image
@@ -76,7 +89,7 @@ const styles = StyleSheet.create({
 
     modalContent: {
         padding: 10,
-        backgroundColor:'white'
+        backgroundColor:colors.mainBackground
     },
     
     wraptitle: {
@@ -85,7 +98,7 @@ const styles = StyleSheet.create({
     },
     
     item: {
-        backgroundColor: colors.primaryBackground,
+        backgroundColor: colors.itemBackground,
         paddingHorizontal: 20,
         paddingVertical:10,
         gap: 20,
@@ -112,6 +125,7 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 20,
         fontWeight: 'bold',
+        color:colors.title
     },
     
     icon: {
@@ -129,16 +143,19 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         textDecorationLine: 'underline',
         marginRight:8,
+        color: colors.textColor,  
     },
     
     price:{
         fontSize: 16,
         color: colors.newPriceColor,   
+        marginRight:10,  
     },
 
     titleCard: {
         fontSize: 16,
         fontWeight: 'bold',
+        color:colors.orange
     },
 })
 

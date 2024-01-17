@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   modalContent: {
-    backgroundColor: '#fff', 
+    backgroundColor: colors.lightgrey, 
     padding: 20,
     borderRadius: 10,
     width: '90%', 
@@ -111,22 +111,25 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight:'bold',
     textAlign:'center',
-    marginVertical:20
+    marginVertical:20,
+    color:colors.orange
+
   },
   input: {
     height: 40,
-    borderColor: colors.lightgrey,
+    borderColor: colors.dark,
     borderWidth: 1,
     marginBottom: 16,
     paddingLeft: 8,
     paddingRight: 16,
     width: 300,
-    textAlign:'center'
+    textAlign:'center',
+    color:colors.dark
   },
 
   
   wrapButton:{
-    backgroundColor: colors.buttonBackground,
+    backgroundColor: colors.orange,
     borderRadius: 10,
     paddingVertical: 10,
     paddingHorizontal: 18,
@@ -134,7 +137,7 @@ const styles = StyleSheet.create({
   
   titleButton: {
     fontSize: 16,
-    color: colors.buttonColor, 
+    color: colors.white, 
     textAlign:'center'
          
   },

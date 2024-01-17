@@ -32,11 +32,12 @@ const styles = StyleSheet.create({
     borderColor: colors.shadowBorderColor,
     flexDirection:'row',
     alignItems: 'center',
+   
     
        
   },
       activeSwitch: {
-        backgroundColor: colors.backgroundModal,
+        backgroundColor: colors.orange,
       },
 
       icon: {
@@ -46,7 +47,7 @@ const styles = StyleSheet.create({
       },
       sizeText: {
         fontSize: 12,
-        color: colors.black,
+        color:colors.textColor
       },
       activeSize: {
         color: colors.mainColor,

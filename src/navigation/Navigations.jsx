@@ -21,6 +21,7 @@ import SignUpScreen from '../screens/home/screens/SignUpScreen';
 import AboutUsScreen from '../screens/home/screens/AboutUsScreen';
 import DeliveryScreen from '../screens/home/screens/DeliveryScreen';
 import ContactsScreen from '../screens/home/screens/ContactsScreen';
+import DrinksScreen from '../screens/home/screens/DrinksScreen';
 
 
 
@@ -76,6 +77,12 @@ const HomeStack =()=>{
         headerTitleAlign: 'center',
         headerLeft: () => (<MenuIcon />),
         headerRight: ()=>(<LogIn/>),
+        headerStyle: {
+          backgroundColor: colors.tabColor, 
+        },
+        headerTitleStyle: {
+          color: colors.title, 
+        },
 
       }}>
       <HomeStack.Screen name="Home" component={HomeScreen}/>
@@ -104,7 +111,12 @@ const PromotionsStack =()=>{
       screenOptions={{
         headerShown: true,
         headerTitleAlign: 'center',
-        
+        headerStyle: {
+          backgroundColor: colors.tabColor, 
+        },
+        headerTitleStyle: {
+          color: colors.title, 
+        },
       }}>
       <PromotionsStack.Screen name="Promotions" component={PromotionsScreen}/>
     </PromotionsStack.Navigator>
@@ -119,15 +131,61 @@ const SettingsStack =()=>{
       screenOptions={{
         headerShown: true,
         headerTitleAlign: 'center',
+        headerStyle: {
+          backgroundColor: colors.tabColor, 
+        },
+        headerTitleStyle: {
+          color: colors.title, 
+        },
         
       }}>
-      <SettingsStack.Screen name="Setting" component={SettingsScreen}/>
+      <SettingsStack.Screen name="Settings" component={SettingsScreen}/>
       <SettingsStack.Screen name="About Us" component={AboutUsScreen}/>
       <SettingsStack.Screen name="Delivery and payment" component={DeliveryScreen}/>
       <SettingsStack.Screen name="Contacts" component={ContactsScreen}/>
     </SettingsStack.Navigator>
   )
 }
+
+const BasketStack =()=>{
+  const BasketStack = createNativeStackNavigator();
+  return(
+    <BasketStack.Navigator
+      screenOptions={{
+        headerShown: true,
+        headerTitleAlign: 'center',
+        headerStyle: {
+          backgroundColor: colors.tabColor, 
+        },
+        headerTitleStyle: {
+          color: colors.title, 
+        },
+      }}>
+      <BasketStack.Screen name="Basket" component={BasketScreen}/>
+    </BasketStack.Navigator>
+  )
+}
+
+
+const DrinksStack =()=>{
+  const DrinksStack = createNativeStackNavigator();
+  return(
+    <DrinksStack.Navigator
+      screenOptions={{
+        headerShown: true,
+        headerTitleAlign: 'center',
+        headerStyle: {
+          backgroundColor: colors.tabColor, 
+        },
+        headerTitleStyle: {
+          color: colors.title, 
+        },
+      }}>
+      <DrinksStack.Screen name="Drink" component={DrinksScreen}/>
+    </DrinksStack.Navigator>
+  )
+}
+
 
 
 const TabBarIcon = (prop) => {
@@ -204,7 +262,10 @@ const MyTabs =()=> {
     <Tab.Navigator
     screenOptions={{
       headerShown:false,
-      tabBarActiveTintColor:'maroon'
+      tabBarActiveTintColor:colors.title,
+      tabBarStyle: {
+        backgroundColor: colors.tabColor,
+      },
     }}>
       <Tab.Screen 
       options={{
@@ -221,7 +282,7 @@ const MyTabs =()=> {
         
         tabBarIcon:TabBarIconSetting,
       }}
-       name="Settings" component={SettingsStack} />
+       name="Setting" component={SettingsStack} />
 
       <Tab.Screen
       options={{
@@ -230,7 +291,7 @@ const MyTabs =()=> {
         },
 
       }}
-       name="Cart" component={BasketScreen} />
+       name="Cart" component={BasketStack} />
 
     </Tab.Navigator>
   );
@@ -273,15 +334,15 @@ const CustomDrawerContent = ({ navigation, state }) => {
         {...commonItemProps}
       />
       <DrawerItem
-        label="Settings"
+        label="Drink"
         icon={({  size }) => (
           <Image
-            source={require('./image/settings-focused.png')}
+            source={require('./image/icon-drinks.png')}
             style={{ width: size, height: size}}
           />
         )}
-        focused={state.index === state.routeNames.indexOf('Settings')}
-        onPress={() => navigation.navigate('Settings')}
+        focused={state.index === state.routeNames.indexOf('Drinks')}
+        onPress={() => navigation.navigate('Drinks')}
         {...commonItemProps}
       />
       
@@ -304,6 +365,8 @@ const  MyDrawer=()=> {
       <Drawer.Screen name="Promotions" component={PromotionsScreen} />
       <Drawer.Screen name="Settings" component={SettingsScreen} />
       <Drawer.Screen name="Basket" component={BasketScreen} />
+      <Drawer.Screen name="Drinks" component={DrinksStack} />
+      
     </Drawer.Navigator>
   );
 };

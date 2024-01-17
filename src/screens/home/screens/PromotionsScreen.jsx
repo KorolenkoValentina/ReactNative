@@ -86,7 +86,7 @@ const PromotionsScreen = () => {
 
   const updateCircleColors = (currentIndex) => {
     const newColors = circleColors.map((color, index) =>
-      index === currentIndex ? 'gray' : 'maroon'
+      index === currentIndex ? 'gray' : 'orange'
     );
     setCircleColors(newColors);
   };
@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
 
   wrapBackground: {
     flex: 1,
-    backgroundColor: colors.primaryBackground,
+    backgroundColor: colors.itemBackground,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -141,9 +141,10 @@ const styles = StyleSheet.create({
     fontSize: 28,
     fontWeight: 'bold',
     textAlign: 'center',
+    color:colors.orange,
     marginBottom:20,
     textDecorationLine: 'underline',
-    color: colors.mainColor  
+    
   },
 
   wrapContent: {

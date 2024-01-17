@@ -113,9 +113,9 @@ const Item = ({item , index, togglePizzaSize }) =>{
     },
   
     item: {
-      backgroundColor: colors.primaryBackground,
-      margin: 20,
-      padding: 10,
+      backgroundColor: colors.itemBackground,
+      margin: 10,
+      padding: 5,
       gap: 20,
       minHeight: 100,
       flexDirection: 'row',
@@ -135,9 +135,8 @@ const Item = ({item , index, togglePizzaSize }) =>{
     },
   
     pizza: {
-      width: 100,
-      height: 100,
-      borderRadius: 10,
+      width: 120,
+      height: 120,
       resizeMode: 'stretch',
     },
   
@@ -165,6 +164,7 @@ const Item = ({item , index, togglePizzaSize }) =>{
       fontWeight: 'bold',
       textAlign: 'center',
       flex: 1,
+      color:colors.title
     },
   
     icon: {
@@ -207,6 +207,7 @@ const Item = ({item , index, togglePizzaSize }) =>{
     titleCard: {
       fontSize: 16,
       fontWeight: 'bold',
+      color: colors.title,
     },
     
   })
