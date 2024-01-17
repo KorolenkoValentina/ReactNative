@@ -62,10 +62,28 @@ class OrderWishStore{
     this.orders  = this.orders.filter((item) => item.id !== orderItem.id);
   }
 
-  getPriceForSize(item) {
-    return item.selectedSize === 42 ? item.size42 : item.newPrice;
-  }
 
+  getPriceForSize(item) {
+    const basePrice = item.selectedSize === 42 ? (item.size42 || '0') : (item.newPrice || '0');
+
+    const toppingsPrice = (item.selectedToppings || []).reduce((toppingTotal, topping) => {
+      const toppingPrice = topping.price || '0';
+      return toppingTotal + parseFloat(toppingPrice.replace('$', ''));
+    }, 0);
+
+    const pricePizza = (parseFloat(basePrice.replace('$', '')) + toppingsPrice).toFixed(2)
+
+    const priceString = typeof item.price === 'string' ? item.price : '0';
+    const drinkPrice = parseFloat(priceString.replace('$', '') || '0');
+    const drinkVolume = item.volume || '0';
+    return {
+      pricePizza:pricePizza,
+      price: drinkPrice,
+      volume: drinkVolume,
+    };
+    
+  }
+  
   
 }
 export default new OrderWishStore()

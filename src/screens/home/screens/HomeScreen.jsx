@@ -15,12 +15,13 @@ import Header from '../components/Header';
 import {mockItemData, mockOnEndReachedData } from '../components/MockData';
 import { observer } from 'mobx-react';
 import Item from '../components/ItemList'
-import orderStore from '../store/index'
 import Animated, {  useAnimatedScrollHandler, useSharedValue, useAnimatedStyle, interpolate } from 'react-native-reanimated';
+import { colors } from '../../../components/Colors';
    
 
 const mockRefreshItem = [
  {id: '58694a0f-3da1-471f-bd96-145571e29d94',
+ type: 'pizza',
  title: 'Сaesar pizza ',
  isNew: true,
  image: require('../images/homeScreen/pizza-сaesar.jpg'),
@@ -136,7 +137,9 @@ const styles = StyleSheet.create({
 
   container: {
     flex: 1,
-    marginTop: StatusBar.currentHeight || 0,
+    // marginTop: StatusBar.currentHeight || 0,
+    backgroundColor:colors.mainBackground,
+    paddingTop:StatusBar.currentHeight || 0,
     
   },
  

@@ -3,9 +3,10 @@
 export const mockItemData = [
     {
       id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+      type: 'pizza',
       title: 'Pepperoni',
       isNew: true,
-      image: require('../images/homeScreen/pepperoni.jpg'),
+      image: require('../images/homeScreen/paperoni.jpg'),
       oldPrice: '$14.99',
       newPrice: '$9.99',
       size42:'$12.99',
@@ -14,6 +15,7 @@ export const mockItemData = [
     },
     {
       id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
+      type: 'pizza',
       title: 'Mozzarella pizza',
       isNew: false,
       image:require('../images/homeScreen/pizza-margarita.jpg'),
@@ -26,6 +28,7 @@ export const mockItemData = [
   
     {
       id: '58694a0f-3da1-471f-bd96-145571e29d72',
+      type: 'pizza',
       title: 'Vegetarian pizza ',
       isNew: true,
       image:require('../images/homeScreen/pizza-vegetarian.jpg'),
@@ -38,6 +41,7 @@ export const mockItemData = [
   
     {
       id: '58694a0f-3da1-471f-bd96-145571e29d73',
+      type: 'pizza',
       title: 'Salami pizza ',
       isNew: true,
       image:require('../images/homeScreen/pizza-Salami.jpg'),
@@ -49,6 +53,7 @@ export const mockItemData = [
     },
     {
       id: '58694a0f-3da1-471f-bd96-145571e29d74',
+      type: 'pizza',
       title: 'Napoletana ',
       isNew: false,
       image:require('../images/homeScreen/pizza-Neopolitana.jpg'),
@@ -61,6 +66,7 @@ export const mockItemData = [
   
     {
       id: '58694a0f-3da1-471f-bd96-145571e29d82',
+      type: 'pizza',
       title: 'Seafood pizza ',
       isNew: false,
       image:require('../images/homeScreen/seafood-pizza.jpg'),
@@ -73,6 +79,7 @@ export const mockItemData = [
   
     {
       id: '58694a0f-3da1-471f-bd96-145571e29d35',
+      type: 'pizza',
       title: 'Smoked salmon ',
       isNew: true,
       image:require('../images/homeScreen/pizza-smoked-salmon.jpg'),
@@ -85,6 +92,7 @@ export const mockItemData = [
   
     {
       id: 'bd7acbea-c2b2-46c2-aed5-3ad53abb28ba',
+      type: 'pizza',
       title: 'Hawaiian pizza ',
       isNew: false,
       image:require('../images/homeScreen/hawaiian-pizza.jpg'),
@@ -96,17 +104,19 @@ export const mockItemData = [
     },
     {
       id: 'bd7acbea-c1b1-46c2-aed5-5ad53abb2836',
-      title: '4 seasons pizza ',
+      type: 'pizza',
+      title: 'Spajsi kurka pizza ',
       isNew: false,
-      image:require('../images/homeScreen/pizza-fourseason.jpg'),
+      image:require('../images/homeScreen/spajsi-kurka-pizza.jpg'),
       oldPrice: '$16.99',
       newPrice: '$13.99',
       size42:'$15.99',
       selectedSize: 32,
-      description: 'Italian pizza with special sauce, mozzarella cheese, pepperoni, olives, ham, mushrooms, bell peppers, onions, oregano.',
+      description: 'Italian pizza with tomato sauce, mozzarella cheese, chicken, corn, sweet chili sauce.',
     },
     {
       id: '58694a0f-3da1-471f-bd96-135571e29d25',
+      type: 'pizza',
       title: '4 cheeses pizza ',
       isNew: false,
       image:require('../images/homeScreen/pizza-fourchees.jpg'),
@@ -124,6 +134,7 @@ export const mockItemData = [
 export const mockOnEndReachedData = [
  {
    id: '58694a0f-3da1-471f-bd96-146932e29d94',
+   type: 'pizza',
    title: 'Сaesar pizza ',
    isNew: true,
    image: require('../images/homeScreen/pizza-сaesar.jpg'),
@@ -135,6 +146,7 @@ export const mockOnEndReachedData = [
   },
   {
     id: '58694a0f-3da1-471f-bd96-146971e29d25',
+    type: 'pizza',
     title: 'Margarita ',
     isNew: false,
     image: require('../images/homeScreen/pizza-margarita.jpg'),
@@ -146,6 +158,7 @@ export const mockOnEndReachedData = [
   },
   {
     id: '58694a0f-3da1-471f-bd25-12571e45d36',
+    type: 'pizza',
     title: 'BBQ Pizza ',
     isNew: true,
     image: require('../images/homeScreen/pizza-bbq.jpg'),
@@ -158,6 +171,7 @@ export const mockOnEndReachedData = [
 
   {
     id: '58294a0f-5da1-221f-bd26-148961e29p46',
+    type: 'pizza',
     title: 'Very cheesy Pizza ',
     isNew: false,
     image: require('../images/homeScreen/pizza-5syrov.jpg'),
@@ -170,14 +184,15 @@ export const mockOnEndReachedData = [
 
   {
     id: '5825a0f-3da5-471f-bd25-185571e29d63',
-    title: 'Pesto pizza ',
+    type: 'pizza',
+    title: 'Karbonara pizza ',
     isNew: true,
-    image: require('../images/homeScreen/pizza-pesto.jpg'),
+    image: require('../images/homeScreen/karbonara-pizza.jpg'),
     oldPrice: '$14.99',
     newPrice: '$12.99',
     size42:'$14.99',
     selectedSize: 32,
-    description: 'Italian pizza with parmesan cheese, pine nuts, garlic, green basil, tomatoes, cheese, pesto sauce.',
+    description: 'Italian pizza with cream sauce, mozzarella cheese, rosemary, bacon, boiled egg, parmesan cheese, capers, cherry tomato.',
   },
 
 
@@ -355,6 +370,87 @@ export const mockFish = [
   },
 
 ]
+
+export const mockDrinks = [
+  {
+    id: '23',
+    type: 'drink',
+    title: ' Pepsi',
+    image: require('../images/drinkScreen/pepsi.jpg'),
+    price: '$2.35',
+    volume:'1 l'
+  },
+  {
+    id: '24',
+    title: 'Redbull',
+    type: 'drink',
+    image: require('../images/drinkScreen/redbull.jpg'),
+    price: '$2.50',
+    volume:'0.5 l'
+  },
+  {
+    id: '25',
+    title: ' Schweppes tangerine',
+    type: 'drink',
+    image: require('../images/drinkScreen/schweppes.jpg'),
+    price: '$2.15',
+    volume:'0.33 l'
+  },
+  {
+    id: '26',
+    title: ' Schweppes lemon',
+    type: 'drink',
+    image: require('../images/drinkScreen/schweppes-lemon.jpg'),
+    price: '$2.15',
+    volume:'0.75 l'
+  },
+  {
+    id: '27',
+    type: 'drink',
+    title: ' Chupa Chups Orange',
+    image: require('../images/drinkScreen/chupaChups.jpg'),
+    price: '$2.15',
+    volume:'0.345 l'
+  },
+  // {
+  //   id: '28',
+  //   title: ' Chupa Chups Grape',
+  //   image: require('../images/drinkScreen/chupaChup.jpg'),
+  //   price: '$2.15',
+  //   weight:'0.345 l'
+  // },
+  {
+    id: '29',
+    type: 'drink',
+    title: ' Borjomi',
+    image: require('../images/drinkScreen/borjomi.jpg'),
+    price: '$2.15',
+    volume:'0.5 l'
+  },
+  {
+    id: '30',
+    type: 'drink',
+    title: ' Morshynska low carbonated',
+    image: require('../images/drinkScreen/morshinskaya-slab-gaz.jpg'),
+    price: '$2.15',
+    volume:'0.75 l'
+  },
+  {
+    id: '31',
+    type: 'drink',
+    title: ' Morshynska non-carbonated',
+    image: require('../images/drinkScreen/morshinskay.jpg'),
+    price: '$2.15',
+    volume:'0.75 l'
+  },
+
+
+
+
+]
+
+
+
 
 
 

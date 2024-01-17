@@ -102,6 +102,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 16,
+    backgroundColor:colors.lightgrey
       
   },
 
@@ -113,13 +114,14 @@ const styles = StyleSheet.create({
 
   input: {
     height: 40,
-    borderColor: colors.lightgrey,
+    borderColor: colors.dark,
     borderWidth: 1,
     marginBottom: 16,
     paddingLeft: 8,
     paddingRight: 16,
     width: 300,
-    textAlign:'center'
+    textAlign:'center',
+    color:colors.dark
   },
   passwordInput: {
     flexDirection: 'row',
@@ -134,7 +136,7 @@ const styles = StyleSheet.create({
   },
 
   wrapButton:{
-    backgroundColor: colors.buttonBackground,
+    backgroundColor: colors.orange,
     borderRadius: 10,
     paddingVertical: 10,
     paddingHorizontal: 18,
@@ -142,7 +144,7 @@ const styles = StyleSheet.create({
 
   titleButton: {
     fontSize: 16,
-    color: colors.buttonColor, 
+    color: colors.white, 
     textAlign:'center'
        
   },

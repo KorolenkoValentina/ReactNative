@@ -1,15 +1,22 @@
+
 export const colors = {
-    primaryBackground: '#FFEBCD',
+    mainBackground: '#2F2F28',
+    dark: '#353C3F',
+    itemBackground: '#4F4A45',
     shadowColor: 'saddleBrown',
-    shadowBorderColor: 'sienna',
-    buttonBackground: 'lightcoral',
-    buttonColor: 'white',
-    textColor: 'gray',
+    shadowBorderColor: '#6C5F5B',
+    grey: '#756867',
+    textColor: '#D5D6D2',
     red: 'red',
     newPriceColor: 'green', 
     mainColor:'maroon',
-    lightgrey:'lightgrey',
     white:'white' ,
-    backgroundModal: 'seashell',
-    black:'#000000'
+    black:'#000000',
+    orange:'#FF8D3F',
+    title:'#CDAB81',
+    // lightColor: '#DAC383',
+    tabColor:'#3A3A3A',
+    lightgrey:'#E8E8E8'
+
 };
+

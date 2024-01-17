@@ -96,7 +96,7 @@ export default function ContactsScreen() {
         <View style={styles.addressItem}>
           <TouchableOpacity onPress={handleToggleDetails}>
               <View style={styles.wrapAddress}>
-                <Text> 30 Soborna Street</Text>
+                <Text style={styles.addresstitle}> 30 Soborna Street</Text>
                 <View style={styles.arrowContainer}>
                 <Image source={showDetails ? require('../images/settingsScreen/icon-down-arrow.png') : require('../images/settingsScreen/icon-arrowWight.png')} style={styles.arrowIcon} />
                 </View>
@@ -133,22 +133,21 @@ export default function ContactsScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor:colors.lightgrey
   },
 
   contactsTitle:{
     fontSize:22,
     fontWeight:'bold',
     margin:20,
-    color:colors.mainColor
+    color:colors.orange
 
   },
   contactsItem:{
     flexDirection:'row',
     borderBottomWidth:2,
-    borderColor:colors.mainColor,
+    borderColor:colors.dark,
     margin:20,
-    
-    
 
   },
   icon:{
@@ -167,11 +166,11 @@ const styles = StyleSheet.create({
   },
   contactsText:{
     fontSize:16,
-    color:colors.textColor,
+    color:colors.grey,
     marginBottom:5
   },
-  addressItem:{
-
+  addresstitle:{
+    color:colors.white
 
   },
 
@@ -179,7 +178,7 @@ const styles = StyleSheet.create({
     flexDirection:'row',
     padding:12,
     borderRadius: 10,
-    backgroundColor:colors.buttonBackground,
+    backgroundColor:colors.orange,
     marginHorizontal:20
     
   },

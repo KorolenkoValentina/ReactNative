@@ -1,5 +1,4 @@
 import { makeObservable, observable, action, runInAction, computed} from 'mobx'
-
 class OrderStore{
 
   @observable orders
@@ -20,27 +19,41 @@ class OrderStore{
     }
   }
   
+
   getPriceForSize(item) {
     const basePrice = item.selectedSize === 42 ? (item.size42 || '0') : (item.newPrice || '0');
+
     const toppingsPrice = (item.selectedToppings || []).reduce((toppingTotal, topping) => {
       const toppingPrice = topping.price || '0';
       return toppingTotal + parseFloat(toppingPrice.replace('$', ''));
     }, 0);
-  
-    return (parseFloat(basePrice.replace('$', '')) + toppingsPrice).toFixed(2);
+
+    const pricePizza = (parseFloat(basePrice.replace('$', '')) + toppingsPrice).toFixed(2)
+
+    const priceString = typeof item.price === 'string' ? item.price : '0';
+    const drinkPrice = parseFloat(priceString.replace('$', '') || '0');
+    const drinkVolume = item.volume || '0';
+    return {
+      pricePizza:pricePizza,
+      price: drinkPrice,
+      volume: drinkVolume,
+    };
+    
   }
 
-  @action togglePizzaSize(item) {
-    this.orders = this.orders.map((orderItem) => {
-      if (orderItem.id === item.id && orderItem.selectedSize === item.selectedSize) {
-        return {
-          ...orderItem,
-          selectedSize: orderItem.selectedSize === 32 ? 42 : 32,
-        };
-      }
-      return orderItem;
-    });
-  }
+
+
+  // @action togglePizzaSize(item) {
+  //   this.orders = this.orders.map((orderItem) => {
+  //     if (orderItem.id === item.id && orderItem.selectedSize === item.selectedSize) {
+  //       return {
+  //         ...orderItem,
+  //         selectedSize: orderItem.selectedSize === 32 ? 42 : 32,
+  //       };
+  //     }
+  //     return orderItem;
+  //   });
+  // }
 
 
   
@@ -92,12 +105,14 @@ class OrderStore{
           return toppingTotal + parseFloat(toppingPrice.replace('$', ''));
         }, 0)
         :0;
+        
+        const priceString = typeof item.price === 'string' ? item.price : '0';
+        const drinkPrice = parseFloat(priceString.replace('$', '') || '0');
   
-        return total + (basePrice + toppingsPrice) * item.quantity;
+        return total + (basePrice + toppingsPrice + drinkPrice) * item.quantity;
       }, 0)
     );
 
-  
     const totalDiscount = rounding(
       this.orders.reduce(
         (total, item) =>
@@ -107,7 +122,7 @@ class OrderStore{
       )
     );
   
-    return { totalAmount, totalDiscount };
+    return { totalAmount, totalDiscount  };
   }
   
   

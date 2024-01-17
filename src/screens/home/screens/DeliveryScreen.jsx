@@ -86,7 +86,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent:'center',
-    alignItems:'center'
+    alignItems:'center',
+    backgroundColor:colors.lightgrey
   },
 
   wrapDelivery:{
@@ -97,7 +98,7 @@ const styles = StyleSheet.create({
 
   },
   mapContainer: {
-    height: 200, // Adjust the height as needed
+    height: 200, 
     marginVertical: 10,
   },
   map: {
@@ -107,7 +108,7 @@ const styles = StyleSheet.create({
   deliveryTitle:{
     fontSize:22,
     fontWeight: 'bold',
-    color: colors.mainColor,
+    color: colors.orange,
     textAlign:'center',
     textDecorationLine: 'underline',
     marginVertical:20
@@ -139,13 +140,14 @@ const styles = StyleSheet.create({
     fontSize:18,
     fontWeight: 'bold',
     marginTop:30,
+    color:colors.grey
     
   },
   deliveryDescription:{
     fontSize:14,
     textAlign: 'center',
     marginTop:10,
-    color:colors.textColor
+    color:colors.mainColor
   }
 
   

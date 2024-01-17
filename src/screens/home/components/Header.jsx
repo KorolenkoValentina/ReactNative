@@ -43,8 +43,10 @@ const Header = ({ onSearch }) => {
         <Animated.View entering={FlipInXUp} exiting={FlipOutXUp } style={styles.textInput} >
         <TextInput
           placeholder="Search..."
+          placeholderTextColor={colors.textColor}
           onChangeText={handleSearch}
           value={searchText}
+          style={{color:colors.textColor }}
         />
        </Animated.View> 
       )}
@@ -97,7 +99,7 @@ const styles = StyleSheet.create({
 
   textInput: {
     borderWidth: 1,
-    borderColor: colors.textColor,
+    borderColor: colors.shadowBorderColor,
     borderRadius: 5,
     padding: 2,
     marginRight:15,

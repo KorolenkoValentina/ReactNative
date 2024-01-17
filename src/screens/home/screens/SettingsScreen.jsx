@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import SupportModalScreen from '../components/SupportModal'
+import { colors } from '../../../components/Colors';
 
 export default function SettingsScreen(){
   const [showModal, setShowModal] = useState(false);
@@ -81,17 +82,20 @@ const styles = StyleSheet.create({
   wrap:{
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor:colors.itemBackground
+    
   },
   container: {
     flex:1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor:colors.mainBackground
   },
   listItem: {
     flexDirection: 'row',
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: colors.lightgrey,
     borderRadius: 8,
     padding: 10,
     margin: 5,
@@ -105,5 +109,6 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 16,
     flex: 1,
+    color:colors.textColor
   },
 });

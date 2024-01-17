@@ -55,10 +55,14 @@ const PizzaScreen = ({ route})=> {
 
   const onItemWish = (item) => {
     
-    const priceForSize = orderWishStore.getPriceForSize(item);
-    
     if (!isItemLiked) {
-      orderWishStore.setOrdersWish({ ...item, price: priceForSize });
+      const selectedItem = {
+        ...item,
+        selectedSize: selectedSize,
+        selectedToppings: selectedToppings,
+        updatedPrice: totalPrice,
+        };
+      orderWishStore.setOrdersWish(selectedItem);
     } else {
       orderWishStore.removeOrderWish(item);
     }
@@ -201,7 +205,7 @@ const PizzaScreen = ({ route})=> {
 const styles = StyleSheet.create({
   container: {
     flex: 1, 
-      
+    backgroundColor: colors.mainBackground, 
   },
 
   checkmarkIcon: {
@@ -214,7 +218,7 @@ const styles = StyleSheet.create({
 
   item: {
     
-    backgroundColor: colors.primaryBackground,
+    backgroundColor: colors.itemBackground,
     marginVertical: 30,
     marginHorizontal:20,
     padding: 10,
@@ -248,6 +252,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 30,
     fontWeight: 'bold',
+    color:colors.title
        
   },
 
@@ -285,7 +290,7 @@ const styles = StyleSheet.create({
 
   selectedCategory: {
     fontSize: 16,
-    backgroundColor: colors.backgroundModal,
+    backgroundColor: colors.orange,
     color: colors.mainColor,
     padding: 6, 
     borderWidth: 1,
@@ -299,7 +304,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 10,
     borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
+    borderBottomColor: colors.grey,
   },
 
   itemImage: {
@@ -312,7 +317,8 @@ const styles = StyleSheet.create({
   itemTitle: {
     fontSize: 10,
     fontWeight: 'bold',
-    marginBottom: 5,
+    marginVertical: 5,
+    color:colors.title
   },
 
   itemTextContainer: {
@@ -321,7 +327,7 @@ const styles = StyleSheet.create({
 
   itemSubtitle: {
     fontSize: 10,
-    color: '#666',
+    color: colors.textColor,
     marginRight:5
   },
 
@@ -329,6 +335,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     marginTop:20,
+    color:colors.title
   },
 
   priceContainer:{
@@ -345,37 +352,41 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: 'bold',
     textDecorationLine: 'underline',
+    color: colors.textColor,
   },
 
   price:{
-    fontSize: 20,
+    fontSize: 24,
     color: colors.newPriceColor,
       
   },
 
   cartIcon: {
-    width:20,
-    height: 20,
+    width:24,
+    height: 24,
     marginLeft: 6,
       
   },
 
   buttonContainer: {
-    backgroundColor: colors.buttonBackground,
+    width:120,
+    backgroundColor: colors.orange,
     borderRadius: 10,
-    paddingVertical: 10,
-    paddingHorizontal: 18,
-  
+   
+
   },
 
   buttonContent: {
-    flexDirection: 'row',
+    flexDirection: 'row', 
+    alignItems: 'center', 
+    justifyContent: 'center',
+    padding: 12,
          
   },
 
   text: {
-    fontSize: 16,
-    color: colors.buttonColor, 
+    fontSize: 18,
+    color: colors.white, 
      
   },
 })
