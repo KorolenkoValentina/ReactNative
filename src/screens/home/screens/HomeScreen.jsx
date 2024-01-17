@@ -22,9 +22,9 @@ import { colors } from '../../../components/Colors';
 const mockRefreshItem = [
  {id: '58694a0f-3da1-471f-bd96-145571e29d94',
  type: 'pizza',
- title: 'Сaesar pizza ',
+ title: 'Caesar pizza ',
  isNew: true,
- image: require('../images/homeScreen/pizza-сaesar.jpg'),
+ image: require('../images/homeScreen/pizza-caesar.png'),
  oldPrice: '$15.99',
  newPrice: '$12.99',
  size42:'$14.99',
