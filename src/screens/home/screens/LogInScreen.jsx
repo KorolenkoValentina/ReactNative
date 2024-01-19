@@ -13,6 +13,8 @@ import {
 import CustomTouchable from '../../../components/CustomTouchable';
 import { useNavigation } from '@react-navigation/native';
 import {colors} from '../../../components/Colors';
+import { Alert } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function  LogInScreen (){
     const [password, setPassword] = useState('');
@@ -25,10 +27,28 @@ export default function  LogInScreen (){
         setShowPassword(!showPassword);
     };
 
-    const handleLogin = () => {
-        
-        console.log('Введений пароль:', password);
+    const handleLogin = async () => {
+        const userData = await AsyncStorage.getItem(`user_${number}`);
+    
+        if (!userData) {
+            Alert.alert('The user with this number does not exist!');
+          return;
+        }
+
+    
+        const parsedUserData = JSON.parse(userData);
+    
+        if (parsedUserData.password === password) {
+            Alert.alert('Successful login!');
+            await AsyncStorage.setItem('isLoggedIn', 'true');
+            await AsyncStorage.setItem('currentUser', JSON.stringify(parsedUserData));
+            console.log('Logged in user:', parsedUserData.firstName); 
+          } else {
+            Alert.alert('Incorrect password!');
+        }
+        navigation.navigate('Home');
     };
+  
     
     const navigateToSignUp = () => {
         navigation.navigate('Sign Up');
@@ -40,10 +60,11 @@ export default function  LogInScreen (){
                 <Text style={styles.titleHeader}> Log in: </Text>
                 <TextInput
                 style={styles.input}
-                onChangeText={onChangeNumber}
-                value={number}
+                onChangeText={(text) => onChangeNumber(text.replace(/\D/g, ''))}
+                value={number.replace(/\D/g, '')}
                 placeholder="+380 XX XX XX XXX"
                 keyboardType="numeric"
+                maxLength={12}
                 required
                 />
                 <View style={styles.passwordInput}>

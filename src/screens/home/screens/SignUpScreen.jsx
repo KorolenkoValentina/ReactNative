@@ -12,14 +12,20 @@ import {
 
 import CustomTouchable from '../../../components/CustomTouchable';
 import {colors} from '../../../components/Colors';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Alert } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 export default function  SignUpScreen (){
   const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [number, onChangeNumber] = useState('');
+  const [number, onChangeNumber] = useState('+380');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+
+
+  const navigation = useNavigation();
+
     
 
   const handlePasswordChange = (text) => {
@@ -30,10 +36,34 @@ export default function  SignUpScreen (){
     setShowPassword(!showPassword);
   };
 
-  const handleLogin = () => {  
-    console.log('Введений пароль:', password);
-  };
+
+  const handleSignUp = async () => {
+    const userExists = await AsyncStorage.getItem(`user_${number}`);
+
+    if (userExists) {
+      Alert.alert('User with this number already exists!');
+      return;
+    }
+
+    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*#?&]{8,}$/;
+
+
+    if (!passwordRegex.test(password)) {
+      Alert.alert('Password must be at least 8  characters long and contain both letters and numbers.');
+      return;
+    }
+  
+    if (password !== confirmPassword) {
+      Alert.alert('Passwords do not match!');
+      return;
+    }
+
+    const userData = { firstName, password };
+    await AsyncStorage.setItem(`user_${number}`, JSON.stringify(userData));
+    await AsyncStorage.setItem('currentUser', JSON.stringify({ firstName}));
     
+    navigation.navigate('Log in');
+  };
     
 
   return (
@@ -47,16 +77,11 @@ export default function  SignUpScreen (){
         />
         <TextInput
           style={styles.input}
-          onChangeText={setLastName}
-          value={lastName}
-          placeholder="Last Name"
-        />
-        <TextInput
-          style={styles.input}
-          onChangeText={onChangeNumber}
-          value={number}
+          onChangeText={(text) => onChangeNumber(text.replace(/\D/g, ''))}
+          value={number.replace(/\D/g, '')}
           placeholder="+380 XX XX XX XXX"
           keyboardType="numeric"
+          maxLength={12}
            required
         />
         <View style={styles.passwordInput}>
@@ -86,7 +111,7 @@ export default function  SignUpScreen (){
           </TouchableOpacity>
         </View>
 
-        <CustomTouchable style={styles.wrapButton} onPress={handleLogin} >
+        <CustomTouchable style={styles.wrapButton} onPress={handleSignUp} >
           <Text style={styles.titleButton}>Log in your account</Text> 
         </CustomTouchable>
              

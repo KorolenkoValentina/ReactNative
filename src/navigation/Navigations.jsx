@@ -3,169 +3,28 @@ import 'react-native-gesture-handler';
 import {
   StyleSheet,
   Image,
-  View,
-  TouchableOpacity ,
+  View, 
   Text,
-
-
 } from 'react-native';
 
-import HomeScreen from '../screens/home/screens/HomeScreen';
-import PizzaScreen from '../screens/home/screens/PizzaScreen';
-import PromotionsScreen from '../screens/home/screens/PromotionsScreen';
-import SettingsScreen from '../screens/home/screens/SettingsScreen';
-import BasketScreen from '../screens/home/screens/BasketScreen';
-import WishListScreen from '../screens/home/components/WishList';
-import LogInScreen from '../screens/home/screens/LogInScreen';
-import SignUpScreen from '../screens/home/screens/SignUpScreen';
-import AboutUsScreen from '../screens/home/screens/AboutUsScreen';
-import DeliveryScreen from '../screens/home/screens/DeliveryScreen';
-import ContactsScreen from '../screens/home/screens/ContactsScreen';
+
 import DrinksScreen from '../screens/home/screens/DrinksScreen';
+import HomeStack from './HomeStack';
+import SettingsStack from './SettingsStack';
+import PromotionsStack from './PromotionsStack';
+import BasketStack from './BasketStack';
+import SplashScreenComponent from '../components/SplashScreen'
 
 
 
-import { NavigationContainer,useNavigation} from '@react-navigation/native';
+import { NavigationContainer, useNavigation} from '@react-navigation/native';
+import AppLoading from 'expo-app-loading';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import {createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createDrawerNavigator, DrawerItem } from '@react-navigation/drawer';
 import { observer } from 'mobx-react-lite';
 import orderStore from '../screens/home/store/index';
 import {colors} from '../components/Colors'
-
-
-
-
-const Tab = createBottomTabNavigator();
-
-const HomeStack =()=>{
-  const navigation = useNavigation();
-  const HomeStack = createNativeStackNavigator();
-
-  const handleLogInPress = () => {
-    
-    navigation.navigate('Log in'); 
-  };
-
-  const MenuIcon = () => (
-    <TouchableOpacity
-      onPress={() => navigation.toggleDrawer()}
-      style={{ marginLeft: 10 }}>
-      <Image
-        source={require('./image/icon-menu.png')}
-        style={{ width: 35, height: 35 }}
-      />
-    </TouchableOpacity>
-  );
-
-  const LogIn = ()=>(
-    <TouchableOpacity
-      onPress={handleLogInPress}
-      style={{ marginRight:10}}>
-      <Image
-        source={require('./image/icon-person.png')}
-        style={{ width: 30, height: 30 }}
-      />
-    </TouchableOpacity>
-  
-  )
-
-  return(
-    <HomeStack.Navigator
-      screenOptions={{
-        headerShown: true,
-        headerTitleAlign: 'center',
-        headerLeft: () => (<MenuIcon />),
-        headerRight: ()=>(<LogIn/>),
-        headerStyle: {
-          backgroundColor: colors.tabColor, 
-        },
-        headerTitleStyle: {
-          color: colors.title, 
-        },
-
-      }}>
-      <HomeStack.Screen name="Home" component={HomeScreen}/>
-      <HomeStack.Screen name="Pizza Details" component={PizzaScreen} />
-      <HomeStack.Screen name="Log in" component={LogInScreen} />
-      <HomeStack.Screen name="Sign Up" component={SignUpScreen} />
-      <HomeStack.Screen
-      options={{
-        headerShown: false,
-        presentation: 'transparentModal',
-        animation:'slide_from_bottom'
-      }}
-      name="ModalScreen"
-      component={WishListScreen}
-      />
-    </HomeStack.Navigator>
-  )
-}
-
-
-
-const PromotionsStack =()=>{
-  const PromotionsStack = createNativeStackNavigator();
-  return(
-    <PromotionsStack.Navigator
-      screenOptions={{
-        headerShown: true,
-        headerTitleAlign: 'center',
-        headerStyle: {
-          backgroundColor: colors.tabColor, 
-        },
-        headerTitleStyle: {
-          color: colors.title, 
-        },
-      }}>
-      <PromotionsStack.Screen name="Promotions" component={PromotionsScreen}/>
-    </PromotionsStack.Navigator>
-  )
-}
-
-
-const SettingsStack =()=>{
-  const SettingsStack = createNativeStackNavigator();
-  return(
-    <SettingsStack.Navigator
-      screenOptions={{
-        headerShown: true,
-        headerTitleAlign: 'center',
-        headerStyle: {
-          backgroundColor: colors.tabColor, 
-        },
-        headerTitleStyle: {
-          color: colors.title, 
-        },
-        
-      }}>
-      <SettingsStack.Screen name="Settings" component={SettingsScreen}/>
-      <SettingsStack.Screen name="About Us" component={AboutUsScreen}/>
-      <SettingsStack.Screen name="Delivery and payment" component={DeliveryScreen}/>
-      <SettingsStack.Screen name="Contacts" component={ContactsScreen}/>
-    </SettingsStack.Navigator>
-  )
-}
-
-const BasketStack =()=>{
-  const BasketStack = createNativeStackNavigator();
-  return(
-    <BasketStack.Navigator
-      screenOptions={{
-        headerShown: true,
-        headerTitleAlign: 'center',
-        headerStyle: {
-          backgroundColor: colors.tabColor, 
-        },
-        headerTitleStyle: {
-          color: colors.title, 
-        },
-      }}>
-      <BasketStack.Screen name="Basket" component={BasketScreen}/>
-    </BasketStack.Navigator>
-  )
-}
-
 
 const DrinksStack =()=>{
   const DrinksStack = createNativeStackNavigator();
@@ -187,7 +46,7 @@ const DrinksStack =()=>{
 }
 
 
-
+const Tab = createBottomTabNavigator();
 const TabBarIcon = (prop) => {
 
   const iconSource = prop.focused
@@ -334,7 +193,7 @@ const CustomDrawerContent = ({ navigation, state }) => {
         {...commonItemProps}
       />
       <DrawerItem
-        label="Drink"
+        label="Drinks"
         icon={({  size }) => (
           <Image
             source={require('./image/icon-drinks.png')}
@@ -342,7 +201,7 @@ const CustomDrawerContent = ({ navigation, state }) => {
           />
         )}
         focused={state.index === state.routeNames.indexOf('Drinks')}
-        onPress={() => navigation.navigate('Drinks')}
+        onPress={() => navigation.navigate('Drink')}
         {...commonItemProps}
       />
       
@@ -362,16 +221,34 @@ const  MyDrawer=()=> {
       drawerContent={(props) => <CustomDrawerContent {...props} />}
     >
       <Drawer.Screen name="Home" component={MyTabs} />
-      <Drawer.Screen name="Promotions" component={PromotionsScreen} />
-      <Drawer.Screen name="Settings" component={SettingsScreen} />
-      <Drawer.Screen name="Basket" component={BasketScreen} />
-      <Drawer.Screen name="Drinks" component={DrinksStack} />
+      <Drawer.Screen name="Promotion" component={PromotionsStack} />
+      <Drawer.Screen name="Settings" component={SettingsStack} />
+      <Drawer.Screen name="Basket" component={BasketStack} />
+      <Drawer.Screen name="Drink" component={DrinksStack} />
       
     </Drawer.Navigator>
   );
 };
 
 export default function Navigator() {
+  const [isReady, setIsReady] = React.useState(false);
+  const handleAppLoadingError = (error) => {
+    console.error(error);
+  };
+
+  const handleAppFinishLoading = () => {
+    setIsReady(true);
+  };
+
+  if (!isReady) {
+    return (
+      <AppLoading
+        startAsync={null} 
+        onError={handleAppLoadingError}
+        onFinish={handleAppFinishLoading}
+      />
+    );
+  }
   return (
     <NavigationContainer>
       <MyDrawer/>
