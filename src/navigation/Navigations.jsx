@@ -13,12 +13,10 @@ import HomeStack from './HomeStack';
 import SettingsStack from './SettingsStack';
 import PromotionsStack from './PromotionsStack';
 import BasketStack from './BasketStack';
-import SplashScreenComponent from '../components/SplashScreen'
 
 
 
 import { NavigationContainer, useNavigation} from '@react-navigation/native';
-import AppLoading from 'expo-app-loading';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import {createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createDrawerNavigator, DrawerItem } from '@react-navigation/drawer';
@@ -231,24 +229,7 @@ const  MyDrawer=()=> {
 };
 
 export default function Navigator() {
-  const [isReady, setIsReady] = React.useState(false);
-  const handleAppLoadingError = (error) => {
-    console.error(error);
-  };
 
-  const handleAppFinishLoading = () => {
-    setIsReady(true);
-  };
-
-  if (!isReady) {
-    return (
-      <AppLoading
-        startAsync={null} 
-        onError={handleAppLoadingError}
-        onFinish={handleAppFinishLoading}
-      />
-    );
-  }
   return (
     <NavigationContainer>
       <MyDrawer/>
