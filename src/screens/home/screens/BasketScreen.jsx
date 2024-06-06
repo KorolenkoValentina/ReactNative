@@ -277,17 +277,19 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: 'bold',
     textDecorationLine: 'underline',
-    color:colors.textColor
+    color:colors.textColor,
+    marginTop:5
   },
 
   price:{
     fontSize: 20,
     color: colors.orange,
+    marginLeft:5
     
   },
   quantityContainer:{
     flexDirection:'row',
-    marginTop:20,
+    marginTop:2,
     borderWidth:1,
     borderRadius:10,
     borderColor:colors.orange

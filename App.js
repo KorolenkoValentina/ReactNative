@@ -1,11 +1,25 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { ImageBackground, StyleSheet } from 'react-native';
 import Navigator from './src/navigation/Navigations';
 import useAppState from './src/components/UseAppState';
+import  {loadFonts}  from './src/components/LoadFonts'
 
 function App() {
   const  {appState}  = useAppState();
-  
+  const [fontsLoaded, setFontsLoaded] = useState(false);
+
+  useEffect(() => {
+    const loadAsync = async () => {
+      await loadFonts();
+      setFontsLoaded(true);
+    };
+
+    loadAsync();
+  }, []);
+
+  if (!fontsLoaded) {
+    return null;
+  }
   
   return (
     <>

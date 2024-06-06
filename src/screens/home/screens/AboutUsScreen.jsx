@@ -43,7 +43,7 @@ const data = [
         image: require('../images/settingsScreen/pizza.jpg'),
     },
     
-  ];
+];
 
 
 const {width, height}= Dimensions.get('screen');

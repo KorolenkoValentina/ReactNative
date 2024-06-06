@@ -23,8 +23,10 @@ import { useNavigation } from '@react-navigation/native';
 
 
 
+
 const Item = ({item , index, togglePizzaSize }) =>{
-  
+
+ 
   const navigation = useNavigation();
   
   const onItemPress = (item) => {
@@ -160,6 +162,7 @@ const Item = ({item , index, togglePizzaSize }) =>{
     },
   
     title: {
+      fontFamily:'Poppins-Regular',
       fontSize: 20,
       fontWeight: 'bold',
       textAlign: 'center',
